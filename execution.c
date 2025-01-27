@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 17:25:43 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/27 01:32:04 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:22:14 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,17 @@ int    exec_one_cmd(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     int status;
     
     if (is_builtin(tmp_cmd_lst->cmd))
+	{
+		redir_dups(tmp_cmd_lst);
         do_builtin(general, tmp_cmd_lst);
+	}
     else
     {
         init_signal(2);
         general->cmd_lst->pid = fork();
-        redir_dups(general);
         if (general->cmd_lst->pid == 0)
         {
+        	redir_dups(tmp_cmd_lst);
             set_exit_status(exec_external_cmds(general, general->cmd_lst));
             clean_gen_exit(general, 1, get_exit_status(), 1);
         }
@@ -150,7 +153,7 @@ int execute(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index)
     {
         // i = 0;
         duping(general, index);
-        redir_dups(general);
+        redir_dups(tmp_cmd_lst);
             // dprintf(2, "######\n");
         if (is_builtin(tmp_cmd_lst->cmd))
         {

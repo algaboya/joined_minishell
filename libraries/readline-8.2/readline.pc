@@ -1,4 +1,4 @@
-prefix=/home/algaboya/Desktop/last/libraries/readline
+prefix=/Users/algaboya/Desktop/minihell/libraries/readline
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

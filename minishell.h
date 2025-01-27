@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/27 04:10:47 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:20:11 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,9 +305,11 @@ int		init_tokens_cmds(char *input, t_shell *general, int i);
 t_token *remove_extra_quotes(t_shell *general);
 // int 	_management(t_shell *g);
 int		open_redir_out(t_shell *general, char *name, int append);
-void	redir_dups(t_shell *general);
-void	out_redir(t_shell *general);
-void	in_redir(t_shell *general);
+void	redir_dups(t_cmd_lst *lst);
+void	out_redir(t_cmd_lst *lst);
+void	in_redir(t_cmd_lst *lst);
 char	*only_for_dol_harcakan(t_shell *general);
-int		open_dollar(t_shell *general, char *input, int *i, int start);
+int	open_infile(t_shell *general, char *name);
+char	*open_dollar(t_shell *general, char *input, int *i, int start);
+
 #endif

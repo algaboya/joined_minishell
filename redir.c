@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:55:53 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/27 00:21:23 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:07:52 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ int open_redir_2(t_shell *g)
 		printf("tokk == %s\n", g->curr_tok->context);
 		g->curr_tok = ft_lst_delone(&g->tok_lst, g->curr_tok);
 		g->curr_cmd->std_in = open_heredoc(g, g->curr_tok, g->curr_cmd, 1);
-	 	if (g->curr_cmd->std_out == -1)
+	 	if (g->curr_cmd->std_in == -1)
 			return (EXIT_FAILURE);
 	}
 	else if (g->curr_tok->context[0] == '<')
 	{
 		g->curr_tok = ft_lst_delone(&g->tok_lst, g->curr_tok);
-		// g->curr_cmd->std_out = open_redir_out(g, g->curr_tok->context, 0);
-	 	if (g->curr_cmd->std_out == -1)
+		g->curr_cmd->std_in = open_infile(g, g->curr_tok->context);
+	 	if (g->curr_cmd->std_in == -1)
 			return (EXIT_FAILURE);
 	}
 	return(0);
