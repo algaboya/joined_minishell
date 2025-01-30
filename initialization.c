@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/27 04:17:32 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/30 21:26:11 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,44 +29,36 @@ void init_general(t_shell *general)
 	general->pipe_count = 0;
 }
 
-int	init_input(char *input, t_shell *general, char **env)
+int	init_input(char *input, t_shell *general)
 {
 	static int	index;
-	input = "";
-	init_general(general);
-	create_env(env, general);
-	incr_shlvl(general);
+
 	while (1)
 	{
 		index = 0;
 		init_signal(1);
 		input = readline("\033[38;5;51m\033[48;5;16mminisHell:\033[0m "); //neon
-		if (!input)
-			exit(get_exit_status());
-		if (input && input[0])
-			add_history(input);
-		// if (init_tokens(input, general, 0) != -1)
-		//  if (ft_strcmp(input, "echo $?") == 0)
-    	// {
-        // 	printf("%d\n", get_exit_status());
-		// 	continue ;
-    	// }
-		if (init_tokens_cmds(input, general, 0) != -1)
+		if(input && input[0])
 		{
-			// if (!general->tok_lst)
-			// 	return(EXIT_SUCCESS);
-			// create_print_cmd(general);
-			execution(general, index);
-		
-			free_cmd_lst(&general->cmd_lst);
-	    	general->cmd_lst = NULL;
-			close_pipes(general->fd, general->pipe_count);
+			add_history(input);
+			if (init_tokens_cmds(input, general, 0) == 0)
+			{
+					execution(general, index);
+				//printf("______________22***\n");
+				// free_cmd_lst(&general->cmd_lst);
+				//printf("______________33***\n");
+				// general->cmd_lst = NULL;
+				close_pipes(general->fd, general->pipe_count);
+				//printf("______________44***\n");
+			}
+			free(input);
 		}
-		free(input);
+		else if (!input)
+		 	exit(get_exit_status());
+		// else
+		// 	break ;
 	}
-	free(input);
-	input = 0;
-	return (get_exit_status());
+	return (free(input), get_exit_status());
 }
 
 t_env *init_env_nodes(char **env)
@@ -82,7 +74,7 @@ t_env *init_env_nodes(char **env)
 	while (env[i] != NULL)
 	{
 		new_node = ft_lstnew(env[i], 1);
-		if (!new_node) 
+		if (!new_node)
 			return NULL;
 		if (list_env == NULL)
 		{
@@ -123,7 +115,7 @@ void	check_heredoc_limit(t_shell *general)
 
 	count = 0;
 	head = general->tok_lst;
-	
+
 	while (head)
 	{
 		if (head->type == 5)
@@ -215,8 +207,32 @@ int	init_tokens_cmds(char *input, t_shell *general, int i)
 	general->tok_lst = remove_extra_quotes(general);
 	check_heredoc_limit(general);
 	create_cmd_lst(general);
+	print_cmd(general->cmd_lst);
 	clean_list(&general->tok_lst);
 	return (0);
+}
+
+void	print_cmd(t_cmd_lst	*cmd_lst)
+{
+	t_cmd_lst *temp;
+
+	temp = cmd_lst;
+	printf("----\n");
+	while (temp)
+	{
+		printf("Command: %s\n", temp->cmd);
+		printf("REDIR: %s\n", temp->red_out);
+		printf("Arguments:");
+		int i = 0;
+		while(temp->args && temp->args[i])
+		{
+			printf("[%s] ", temp->args[i]);
+			i++;
+		}
+		printf("\n\n");
+		temp = temp->next;
+	}
+	printf("----\n");
 }
 
 // int	init_op_token(char *input, int i, t_token **token_list)

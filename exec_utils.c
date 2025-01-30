@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 18:28:32 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/19 21:07:10 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:43:51 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char    **ft_ptrptr(char *s, char **ptr, char c)
     int i;
     int let_count;
     int d_count;
-    
+
     i = 0;
     d_count = ft_word_count(s, c);
     while (i < d_count)
@@ -101,8 +101,8 @@ int is_builtin(char *cmd)
 {
     if (ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "env") == 0
         || ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "unset") == 0
-        || ft_strcmp(cmd, "exit") == 0 || ft_strcmp(cmd, "pwd") == 0)
-        // || ft_strcmp(cmd, "echo") == 0)
+        || ft_strcmp(cmd, "exit") == 0 || ft_strcmp(cmd, "pwd") == 0
+        || ft_strcmp(cmd, "echo") == 0)
         return (1);
     return (0);
 }

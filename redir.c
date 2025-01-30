@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:55:53 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/27 18:07:52 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:13:14 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int heredoc_init(t_shell *g, t_cmd_lst **cmd, t_token *tok)
 		if ((*cmd)->heredoc == NULL)
 		{
 			(*cmd)->heredoc = ft_strdup(tok->context);
-			check_malloc((*cmd)->heredoc);	
+			check_malloc((*cmd)->heredoc);
 		}
 	// }
 	return (0);
@@ -31,7 +31,7 @@ static void	execute_heredoc(t_shell *g, t_cmd_lst *cmd)
 {
 	char *input;
 	int fd;
-	
+
 	(void)g;
 	fd = open("temple.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (fd < 0)
@@ -109,6 +109,7 @@ int open_redir(t_shell *g)
 	}
 	else if (g->curr_tok->context[0] == '>')
 	{
+		printf("%s\n, ", g->curr_cmd->cmd);
 		g->curr_tok = ft_lst_delone(&g->tok_lst, g->curr_tok);
 		g->curr_cmd->std_out = open_redir_out(g, g->curr_tok->context, 0);
 	 	if (g->curr_cmd->std_out == -1)

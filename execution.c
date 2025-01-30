@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 17:25:43 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/27 18:22:14 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:34:51 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void    execution(t_shell *general, int index)
     int         i;
     t_cmd_lst   *new;
     t_cmd_lst   *tmp_cmd_lst;
-    
     new  = general->cmd_lst;
     tmp_cmd_lst = general->cmd_lst;
     if (general->cmd_lst == NULL)
@@ -93,7 +92,7 @@ void	waiting(pid_t pid, int *_status)
 int    exec_one_cmd(t_shell *general, t_cmd_lst *tmp_cmd_lst)
 {
     int status;
-    
+
     if (is_builtin(tmp_cmd_lst->cmd))
 	{
 		redir_dups(tmp_cmd_lst);
@@ -144,11 +143,11 @@ void    do_builtin(t_shell *general, t_cmd_lst *tmp_cmd_lst)
 int execute(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index)
 {
     // int         status;
-    
-    init_signal(2); 
+
+    init_signal(2);
     tmp_cmd_lst->pid = fork();
     // if (tmp_cmd_lst->pid == -1)
-        
+
     if (tmp_cmd_lst->pid == 0)
     {
         // i = 0;
@@ -168,8 +167,8 @@ int execute(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index)
     // else
     //     perror("fork");
     // close(general->fd[0][1]);
-    
-    if (index > 0) 
+
+    if (index > 0)
         close(general->fd[index - 1][0]);
     if (index < general->pipe_count)
         close(general->fd[index][1]);
@@ -242,7 +241,7 @@ void    split_and_run(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     execve(path, tmp_cmd_lst->args, env);
     free_array(env);
     env = NULL;
-    free_set_null(path); 
+    free_set_null(path);
 }
 
 void	ft_putstr_fd(char *s, int fd)
@@ -288,4 +287,3 @@ void do_path_exec(t_shell *general)
         clean_gen_exit(general, 127, 1, 0);
 }
 
-        

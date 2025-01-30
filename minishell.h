@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/27 18:20:11 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/30 21:16:45 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ int			open_redir_2(t_shell *g);
 int			open_redir(t_shell *g);
 int			redirs_management(t_shell *g);
 void		fill_commands(t_shell *general);
-int			check_fill_commands(t_shell *g, int i, int j);
+// int			check_fill_commands(t_shell *g, int i, int j);
+int			check_fill_commands(t_shell *g, int i);
 void		check_heredoc_syntax(t_token *head);
 t_cmd_lst	*initialize_new_cmd();
 int 		create_cmd_lst(t_shell *g);
@@ -157,7 +158,7 @@ int		check_inp_quotes(t_shell *general, char *input, int i, int start);
 
 // ***_____main_functions_____***
 void	init_general(t_shell *general);
-int		init_input(char *input, t_shell *gen, char **env);
+int		init_input(char *input, t_shell *gen);
 int		check_cmd(char **env, t_shell *general);
 t_env	*init_env_nodes(char **env);
 
@@ -311,5 +312,7 @@ void	in_redir(t_cmd_lst *lst);
 char	*only_for_dol_harcakan(t_shell *general);
 int	open_infile(t_shell *general, char *name);
 char	*open_dollar(t_shell *general, char *input, int *i, int start);
+
+void	print_cmd(t_cmd_lst	*cmd_lst);
 
 #endif

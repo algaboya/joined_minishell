@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dol.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:13:47 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/01/27 04:13:35 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:38:15 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char *countcpy_len(char *input, int start, int *l, t_shell *general)
 		len++;
 	}
 	*l = len + ft_strlen(general->doll_lst->u_key);
-	val_len = ft_strlen(general->doll_lst->value);	
+	val_len = ft_strlen(general->doll_lst->value);
 	copy = (char *)malloc(sizeof(char) * (val_len + len + spec_len(input, *l) + 1));
 	check_malloc(copy);
 	ft_strcpy(copy, input, i, len);
@@ -78,29 +78,27 @@ int	check_cut_quotes(t_shell *general, char **input, int *i, int start)
 {
 	if (check_inp_quotes(general, *input, *i, start) == -1)
 		return (-1);
-	while ((*input)[*i])
+	while (input[0][*i])
 	{
-		if (!general->sg_quote && (*input)[*i] == '\"')
+		if (!general->sg_quote && input[0][*i] == '\"')
 			general->db_quote = !general->db_quote;
-		else if (!general->db_quote && (*input)[*i] == '\'')
+		else if (!general->db_quote && input[0][*i] == '\'')
 			general->sg_quote = !general->sg_quote;
-		else if ((*input)[*i] == '$' && !general->sg_quote)
+		else if (input[0][*i] == '$' && !general->sg_quote)
 		{
-			open_dollar(general, *input, i, start);
+			// segfault $? $$ $0 again, new one, dunno why look later
+			// echo ba"rev $USER' $USERecho ba"rev $USER' $USER 'jan"$USER"
+			open_dollar(general, input[0], i, start);
 			expand_var(input, general, &start, i);
-			(--*i); //check this , do it only when after dollar comes $
 		}
-		else if (((*input)[*i] == ' ' || (*input)[*i] == '|' || (*input)[*i] == '>' || (*input)[*i] == '<') && !general->db_quote && !general->sg_quote)
-		{
-			if ((*input)[*i] == ' ')
-				return (add_token_list(&general->tok_lst, my_substr(*input, start, (*i - start)), 0), 0);
-			*i = init_op_token(*input, i, &general->tok_lst);
-		}
-		(*i)++;
+		else if ((input[0][*i] == ' ' || input[0][*i] == '|' || input[0][*i] == '>' || input[0][*i] == '<') && !general->db_quote && !general->sg_quote)
+			return (add_token_list(&general->tok_lst, my_substr(*input, start, (*i - start)), 0), 0);
+		if (input[0][(*i)])
+			(*i)++;
 	}
 	add_token_list(&general->tok_lst, my_substr(*input, start, (*i - start)), 0);
-	return (EXIT_SUCCESS);
-}
+	return (0);
+} 
 
 // char *only_for_dol_harcakan(t_shell *general)
 // {
