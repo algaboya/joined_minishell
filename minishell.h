@@ -6,7 +6,7 @@
 /*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/30 21:16:45 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:24:37 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,13 @@
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <stdbool.h>
+#include <errno.h>
 
+
+# define NO_SUCH_FILE_MSG "No such file or directory"
+# define PERMISSION_DENIED_MSG "Permission denied"
+# define IS_DIRECTORY_MSG "is a directory"
+# define NOT_DIRECTORY_MSG "Not a directory"
 typedef enum s_ttype
 {
 	WORD = 0,			// commands and arguments
@@ -74,8 +80,8 @@ typedef struct			s_cmd_lst
 	char				*red_in;
 	char				*red_out;
 	char				*red_append;
-	int					std_in; // fd
-	int					std_out; // fd
+	int					std_in;
+	int					std_out;
 }						t_cmd_lst;
 
 // typedef struct s_cmd_lst
@@ -120,18 +126,22 @@ typedef struct s_shell
 	int			pipe_count;
 	int			exit_status;
 	char		*name;
+	int					original_stdin;
+	int					original_stdout;
 }			t_shell;
 
 
+void	execute_heredoc(t_shell *g, t_cmd_lst *cmd);
+int is_redir(t_ttype type);
 t_token		*ft_lst_delone(t_token **lst, t_token *node);
 void		list_add_back_cmd(t_cmd_lst **lst, t_cmd_lst *new);
 int			heredoc_init(t_shell *g, t_cmd_lst **cmd, t_token *tok);
 int			open_redir_2(t_shell *g);
 int			open_redir(t_shell *g);
-int			redirs_management(t_shell *g);
+//int			redirs_management(t_shell *g);
 void		fill_commands(t_shell *general);
 // int			check_fill_commands(t_shell *g, int i, int j);
-int			check_fill_commands(t_shell *g, int i);
+int check_fill_commands(t_shell *g, int i);
 void		check_heredoc_syntax(t_token *head);
 t_cmd_lst	*initialize_new_cmd();
 int 		create_cmd_lst(t_shell *g);
@@ -209,6 +219,8 @@ short	del_t_node(t_token *lst);
 int		check_cut_quotes(t_shell *general, char **input,  int *i, int start);
 
 
+void	error_msg(int status, char *command_name);
+
 // **************
 // int		check_dollar_sign(char *input, int i, t_shell *general);
 char 	*sgmnt_cpy(char *input, int *i);
@@ -218,7 +230,7 @@ char 	*sgmnt_cpy(char *input, int *i);
 void	create_print_cmd(t_shell *general);
 int		export_valid(char *arg);
 int		pwd_builtin(t_shell *general);
-int		echo_builtin(t_shell *general);
+int		echo_builtin(t_shell *general, t_cmd_lst *cmd);
 int		cd_builtin(t_shell *general);
 int		export_builtin(t_shell *general, char *command);
 void	error_message(char *var);
@@ -306,9 +318,9 @@ int		init_tokens_cmds(char *input, t_shell *general, int i);
 t_token *remove_extra_quotes(t_shell *general);
 // int 	_management(t_shell *g);
 int		open_redir_out(t_shell *general, char *name, int append);
-void	redir_dups(t_cmd_lst *lst);
-void	out_redir(t_cmd_lst *lst);
-void	in_redir(t_cmd_lst *lst);
+int	redir_dups(t_cmd_lst *lst);
+int	out_redir(t_cmd_lst *lst);
+int	in_redir(t_cmd_lst *lst);
 char	*only_for_dol_harcakan(t_shell *general);
 int	open_infile(t_shell *general, char *name);
 char	*open_dollar(t_shell *general, char *input, int *i, int start);

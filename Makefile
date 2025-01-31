@@ -45,6 +45,7 @@ SRCS_NAME =	main.c mini_utils.c \
 			shlvl.c cmd.c remove_extra.c\
 			lib_utils_3.c lib_utils_4.c \
 			redir.c redir_utils.c\
+			error.c\
 
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 OBJS_NAME = $(SRCS_NAME:.c=.o)
@@ -73,7 +74,7 @@ fclean: clean
 	@$(RM) $(NAME)
 	@rm -rf $(LIBS_DIR)/$(READLINE)
 	@rm -rf $(OBJS_DIR)
-	@make -s clean -C $(LIBS_DIR)/readline-8.2 
+	@make -s clean -C $(LIBS_DIR)/readline-8.2
 
 config:
 	mkdir -p readline_local

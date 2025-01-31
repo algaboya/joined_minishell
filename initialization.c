@@ -6,7 +6,7 @@
 /*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/30 21:26:11 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/01/31 20:52:55 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void init_general(t_shell *general)
 	general->pipe_index = 0;
 	// general->exit_status = 0;
 	general->pipe_count = 0;
+	general -> original_stdin = dup(STDIN_FILENO);
+	general -> original_stdout = dup(STDOUT_FILENO);
 }
 
 int	init_input(char *input, t_shell *general)
@@ -43,20 +45,13 @@ int	init_input(char *input, t_shell *general)
 			add_history(input);
 			if (init_tokens_cmds(input, general, 0) == 0)
 			{
-					execution(general, index);
-				//printf("______________22***\n");
-				// free_cmd_lst(&general->cmd_lst);
-				//printf("______________33***\n");
-				// general->cmd_lst = NULL;
+				execution(general, index);
 				close_pipes(general->fd, general->pipe_count);
-				//printf("______________44***\n");
 			}
 			free(input);
 		}
 		else if (!input)
 		 	exit(get_exit_status());
-		// else
-		// 	break ;
 	}
 	return (free(input), get_exit_status());
 }
@@ -207,7 +202,8 @@ int	init_tokens_cmds(char *input, t_shell *general, int i)
 	general->tok_lst = remove_extra_quotes(general);
 	check_heredoc_limit(general);
 	create_cmd_lst(general);
-	print_cmd(general->cmd_lst);
+	//redirs_management(general);
+	//print_cmd(general->cmd_lst);
 	clean_list(&general->tok_lst);
 	return (0);
 }
@@ -221,7 +217,16 @@ void	print_cmd(t_cmd_lst	*cmd_lst)
 	while (temp)
 	{
 		printf("Command: %s\n", temp->cmd);
-		printf("REDIR: %s\n", temp->red_out);
+		if (temp -> red_out)
+			printf("R_OUT: %s\n", temp->red_out);
+		if (temp -> red_in)
+			printf("R_IN: %s\n", temp->red_in);
+		if (temp -> heredoc)
+			printf("R_HEREDOC: %s\n", temp->heredoc);
+		if (temp -> red_append)
+			printf("R_APPEND: %s\n", temp->red_append);
+		printf("stdin %d\n", temp -> std_in);
+		printf("stdout %d\n", temp -> std_out);
 		printf("Arguments:");
 		int i = 0;
 		while(temp->args && temp->args[i])

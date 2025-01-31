@@ -6,7 +6,7 @@
 /*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:13 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/30 18:35:15 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:05:39 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **env)
 		create_env(env, general);
 		incr_shlvl(general);
 		if (init_input(input, general)) // if 1 error
-		{	return (free(general), get_exit_status());}
+			return (free(general), get_exit_status());
 	}
 	free(general);
 	return (get_exit_status());

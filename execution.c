@@ -6,7 +6,7 @@
 /*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 17:25:43 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/30 19:34:51 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/01/31 21:03:39 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,12 @@ void	waiting(pid_t pid, int *_status)
 int    exec_one_cmd(t_shell *general, t_cmd_lst *tmp_cmd_lst)
 {
     int status;
-
-    if (is_builtin(tmp_cmd_lst->cmd))
+    if (tmp_cmd_lst->cmd && is_builtin(tmp_cmd_lst->cmd))
 	{
 		redir_dups(tmp_cmd_lst);
         do_builtin(general, tmp_cmd_lst);
+		dup2(general -> original_stdin, STDIN_FILENO);
+		dup2(general -> original_stdout, STDOUT_FILENO);
 	}
     else
     {
@@ -104,8 +105,8 @@ int    exec_one_cmd(t_shell *general, t_cmd_lst *tmp_cmd_lst)
         general->cmd_lst->pid = fork();
         if (general->cmd_lst->pid == 0)
         {
-        	redir_dups(tmp_cmd_lst);
-            set_exit_status(exec_external_cmds(general, general->cmd_lst));
+        	if (redir_dups(tmp_cmd_lst) >= 0)
+           		set_exit_status(exec_external_cmds(general, general->cmd_lst));
             clean_gen_exit(general, 1, get_exit_status(), 1);
         }
         else if (general->cmd_lst->pid > 0)
@@ -132,8 +133,7 @@ void    do_builtin(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "pwd") == 0)
 		set_exit_status(pwd_builtin(general));
     else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "echo") == 0)
-		set_exit_status(echo_builtin(general));
-    // dprintf(2, "NOT A BUILTIN\n");
+		set_exit_status(echo_builtin(general, tmp_cmd_lst));
 }
 
 // void __attribute__((constructor)) foo(){
@@ -142,44 +142,26 @@ void    do_builtin(t_shell *general, t_cmd_lst *tmp_cmd_lst)
 
 int execute(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index)
 {
-    // int         status;
-
     init_signal(2);
     tmp_cmd_lst->pid = fork();
-    // if (tmp_cmd_lst->pid == -1)
 
     if (tmp_cmd_lst->pid == 0)
     {
-        // i = 0;
+		//printf("cmd -> name %s\n", tmp_cmd_lst -> args[1]);
         duping(general, index);
-        redir_dups(tmp_cmd_lst);
-            // dprintf(2, "######\n");
-        if (is_builtin(tmp_cmd_lst->cmd))
+        if (redir_dups(tmp_cmd_lst) < 0)
+			clean_gen_exit(general, get_exit_status(), 0, 1);
+        if (tmp_cmd_lst->cmd && is_builtin(tmp_cmd_lst->cmd))
         {
             do_builtin(general, tmp_cmd_lst);
             clean_gen_exit(general, get_exit_status(), 0, 1);
         }
         set_exit_status(exec_external_cmds(general, tmp_cmd_lst));
-        // printf("status = %d\n", get_exit_status());
     }
-    // else if (tmp_cmd_lst->pid > 0)
-    //     waitpid(tmp_cmd_lst->pid, &status, 0);
-    // else
-    //     perror("fork");
-    // close(general->fd[0][1]);
-
     if (index > 0)
         close(general->fd[index - 1][0]);
     if (index < general->pipe_count)
         close(general->fd[index][1]);
-    // close(general->fd[0][1]); // fixed to 'ls | cat'
-    // int j = 0;
-    // while (j < general->pipe_count)
-    // {
-    //     printf("THE END [%d] - [%d][%d]\n", j, general->fd[j][0], general->fd[j][1]);
-    //     j++;
-    // }
-    // dprintf(2, "___CLOSED IN PARENT_%d__\n", general->fd[0][1]);
     return (EXIT_SUCCESS);
 }
 
@@ -208,6 +190,8 @@ void    duping(t_shell *general, int index)
 
 int exec_external_cmds(t_shell *general, t_cmd_lst *tmp_cmd_lst)
 {
+	if (!tmp_cmd_lst->cmd)
+		clean_gen_exit(general, get_exit_status(), 0,1);
     if (is_abs_rel_path(tmp_cmd_lst->cmd))
        do_path_exec(general);
     else
@@ -223,15 +207,15 @@ void    split_and_run(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     char    *path;
     char    **env;
     char    **splitted;
-
     path = getenv("PATH");
     splitted = ft_split(path, ':');
     path = the_path(splitted, tmp_cmd_lst->cmd);
     free_array(splitted);
     if (path == NULL)
     {
-        mini_error(tmp_cmd_lst->cmd, 2);
-        general->exit_status = 1;
+        //mini_error(tmp_cmd_lst->cmd, 2);
+		error_msg(127,tmp_cmd_lst->cmd);
+        // general->exit_status = 1;
         free_set_null(path);
         free_cmd_lst(&general->cmd_lst);
         // free_fd_array(general->fd);
@@ -269,8 +253,7 @@ void do_path_exec(t_shell *general)
         ft_putstr_fd(": is a directory\n", 2);
         free_cmd_lst(&general->cmd_lst);
         general->cmd_lst = NULL;
-        exit(126);
-        // clean_gen_exit(general, 126, 0, 1);
+        clean_gen_exit(general, 126, 0, 1);
 	}
     if (access(general->cmd_lst->cmd, F_OK) == 0)
     {

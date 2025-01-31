@@ -6,7 +6,7 @@
 /*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:13:47 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/01/30 18:38:15 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:55:41 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_cut_quotes(t_shell *general, char **input, int *i, int start)
 	}
 	add_token_list(&general->tok_lst, my_substr(*input, start, (*i - start)), 0);
 	return (0);
-} 
+}
 
 // char *only_for_dol_harcakan(t_shell *general)
 // {

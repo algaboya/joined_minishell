@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:55:03 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/27 01:27:32 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:37:12 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	echo_builtin(t_shell *general)  //need argssssss
+int	echo_builtin(t_shell *general, t_cmd_lst *cmd)  //need argssssss
 {
+	//printf("olaaaaaa\n");
 	int i;
     int j;
     int line_flag;
@@ -21,19 +22,20 @@ int	echo_builtin(t_shell *general)  //need argssssss
     i = 1;
     j = 2;
     line_flag = 0;
-    if (!general->cmd_lst->args[i])
+	(void)general;
+    if (!cmd->args[i])
         return (ft_putstr_fd("\n", 1), 0);
-    if (ft_strcmp(general->cmd_lst->args[i], "-n") == 0)
+    if (ft_strcmp(cmd->args[i], "-n") == 0)
     {
-        while (general->cmd_lst->args[i][j] == 'n')
+        while (cmd->args[i][j] == 'n')
             j++;
         line_flag = 1;
     }
-    while (general->cmd_lst->args && general->cmd_lst->args[i])
+    while (cmd->args && cmd->args[i])
     {
-        ft_putstr_fd(general->cmd_lst->args[i], 1);
+        ft_putstr_fd(cmd->args[i], 1);
         i++;
-        if (general->cmd_lst->args[i])
+        if (cmd->args[i])
             ft_putstr_fd(" ", 1);
     }
     if (line_flag == 0)

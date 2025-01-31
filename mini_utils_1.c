@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elen_t13 <elen_t13@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:50:05 by etamazya          #+#    #+#             */
-/*   Updated: 2024/12/23 19:26:57 by elen_t13         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:59:44 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ char	*check_env_var(t_env *env_lst, const char *context)
 	tmp = env_lst;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->key, context) == 0)
+		if (ft_strcmp(context, "?") == 0)
+			return (ft_itoa(get_exit_status()));
+		else if (ft_strcmp(tmp->key, context) == 0)
 			return (ft_strdup(tmp->value));
 		tmp = tmp->next;
 	}

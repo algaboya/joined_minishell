@@ -6,7 +6,7 @@
 /*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:55:53 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/30 19:13:14 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:47:43 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ int heredoc_init(t_shell *g, t_cmd_lst **cmd, t_token *tok)
 	// }
 	return (0);
 }
-static void	execute_heredoc(t_shell *g, t_cmd_lst *cmd)
+void	execute_heredoc(t_shell *g, t_cmd_lst *cmd)
 {
 	char *input;
-	int fd;
 
 	(void)g;
-	fd = open("temple.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (fd < 0)
+	cmd -> std_in = open("temple.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (cmd -> std_in < 0)
 	{
 		printf("./minisHell\n");
 		exit(EXIT_FAILURE);
@@ -49,11 +48,12 @@ static void	execute_heredoc(t_shell *g, t_cmd_lst *cmd)
 			free(input);
 			break ;
 		}
-		// if (cmd->type)
-		write(fd, input, ft_strlen(input));
-		write(fd, "\n", 1);
+		write(cmd -> std_in, input, ft_strlen(input));
+		write(cmd -> std_in, "\n", 1);
 		free(input);
 	}
+	close(cmd -> std_in);
+	open_infile(g, "temple.txt");
 }
 
 int open_heredoc(t_shell *g, t_token *tok, t_cmd_lst *cmd, int flag)
@@ -121,28 +121,27 @@ int open_redir(t_shell *g)
 	return (status);
 }
 
-int redirs_management(t_shell *g)
-{
-	g->curr_tok = g->tok_lst;
-	g->curr_cmd = g->cmd_lst;
-	while (g->curr_cmd && g->curr_tok)
-	{
-		// if (redir_check_pt2(g) == EXIT_FAILURE)
-		// 	return (EXIT_FAILURE);
-		if(g->curr_tok && (g->curr_tok->type == REDIR_IN || g->curr_tok->type == REDIR_OUT \
-		 || g->curr_tok->type == REDIR_HEREDOC) && (!(g->curr_tok->next) || g->curr_tok->next->type == PIPE))
-			return (printf("ERORRRRRRR\n"), EXIT_FAILURE); // "minisHell: exit(258) status syntax error near unexpected toke `"
-		else if (g->curr_cmd && g->curr_tok \
-		&& (g->curr_tok->type == 2 || g->curr_tok->type == 3 || g->curr_tok->type == 4 \
-		|| g->curr_tok->type == 5) && (g->curr_tok->next && g->curr_tok->next->type == 0))
-		{
-			if (open_redir(g) == 1 && g->pipe_count < 1)
-				return (EXIT_FAILURE);
-		}
-		else if (g->curr_tok)
-			g->curr_tok = g->curr_tok->next;
-		else
-			break ;
-	}
-	return (EXIT_SUCCESS);
-}
+// int redirs_management(t_cmd_lst *cmd, t_ttype type)
+// {
+// 	if (cmd->red_out)
+// 		free_set_null(cmd->red_out);
+// 	cmd->red_out = ft_strdup(g->curr_tok->context);
+// 	cmd -> std_out = open_redir_out(g, cmd -> red_out, 0);
+// 	 }
+// 	t_cmd_lst *cmd;
+
+// 	cmd = g -> cmd_lst;
+// 	while (cmd)
+// 	{
+// 		// if (cmd -> red_out)
+// 		// 	cmd -> std_out = open_redir_out(g, cmd -> red_out, 0);
+// 		if (cmd -> red_append)
+// 			cmd -> std_out = open_redir_out(g, cmd -> red_append, 1);
+// 		else if (cmd -> heredoc)
+// 			execute_heredoc(g, cmd);
+// 		else if (cmd -> red_in)
+// 			cmd -> std_in = open_infile(g, cmd -> red_in);
+// 		cmd = cmd -> next;
+// 	}
+// 	return (0);
+// }

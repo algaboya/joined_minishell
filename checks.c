@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 13:18:10 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/01/27 04:23:55 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:55:50 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,27 @@ char *open_dollar(t_shell *general, char *input, int *i, int start)
 {
 	(void)start;
 	if (input[*i] && input[*i] == '$')
-	{		
+	{
 		(*i)++;
-		if (input[*i] == '?' && input[*i + 1])
-		{
-				general->doll_lst->value = ft_itoa(get_exit_status());
-				printf("____%s____\n", general->doll_lst->value);
-				}
-				printf("AFTER\n");
+		// if (input[*i] == '?' && !input[*i + 1])
+		// {
+		// 		general->doll_lst->value = ft_itoa(get_exit_status());
+		// }
 		general->doll_lst->u_key = sgmnt_cpy(input, i);
-		printf("c = ____%c\n____", input[*i]);
 		if (!general->doll_lst->u_key[0])
-		{	
+		{
 			general->doll_lst->value = (char *)malloc(sizeof(char) * 2);
 			check_malloc(general->doll_lst->value);
-			general->doll_lst->value[0] = '$'; 
-			general->doll_lst->value[1] = '\0'; 
+			general->doll_lst->value[0] = '$';
+			general->doll_lst->value[1] = '\0';
 		}
 		else
 			general->doll_lst->value = check_env_var(general->env_lst, general->doll_lst->u_key);
 		if (!general->doll_lst->value)
-		{	
+		{
 			general->doll_lst->value = (char *)malloc(sizeof(char) * 1);
 			check_malloc(general->doll_lst->value);
-			general->doll_lst->value[0] = '\0'; 
+			general->doll_lst->value[0] = '\0';
 		}
 	}
 	return (general->doll_lst->value);
