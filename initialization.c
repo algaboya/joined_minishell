@@ -6,7 +6,7 @@
 /*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/31 20:52:55 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/01/31 21:10:30 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,6 @@ int	init_tokens_cmds(char *input, t_shell *general, int i)
 	general->tok_lst = remove_extra_quotes(general);
 	check_heredoc_limit(general);
 	create_cmd_lst(general);
-	//redirs_management(general);
-	//print_cmd(general->cmd_lst);
 	clean_list(&general->tok_lst);
 	return (0);
 }
@@ -307,51 +305,51 @@ void	print_cmd(t_cmd_lst	*cmd_lst)
 // }
 
 
-int init_op_token(char *input, int *i, t_token **token_list)
-{
-	if (!input || !token_list)
-		return -1;
-	if (input[*i] && input[*i] == '|')
-	{
-		if (!input[*i + 1] || (input[*i + 1] != '|' && !input[*i + 2])) // Handle syntax error
-			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
-		if (input[*i + 1] == '|')
-			return (printf("minisHell: syntax error near unexpected token `||'\n"), -1);
-		add_token_list(token_list, my_substr(input, *i, 1), 1);
-	}
-	else if (input[*i] && input[*i] == '>')
-	{
-		// Handle '>' and '>>' tokens
-		if (!input[*i + 1] || (input[*i + 1] != '<' && !input[*i + 2])) // Handle error
-			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
-		if (input[*i + 1] && input[*i + 1] == '>')
-		{
-			if (input[*i + 2] && (input[*i + 2] == '>' || input[*i + 2] == '<' || input[*i + 2] == '|'))
-				return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 2], input[*i + 3]), -1);
-			add_token_list(token_list, my_substr(input, *i, 2), 4);
-			(*i)++;
-		}
-		else if (input[*i + 1] && input[*i + 1] == '<')
-			return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 1], input[*i + 2]), -1); //Handle error for invalid combinations like '><' or '<|'
-		else
-			add_token_list(token_list, my_substr(input, *i, 1), 3);
-	}
-	else if (input[*i] && input[*i] == '<')
-	{
-		if (!input[*i + 1] || (input[*i + 1] != '>' && !input[*i + 2])) // Handle error
-			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
-		if (input[*i + 1] && input[*i + 1] == '<')
-		{
-			if (input[*i + 2] && (input[*i + 2] == '>' || input[*i + 2] == '<'))
-				return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 2], input[*i + 3]), -1);
-			add_token_list(token_list, my_substr(input, *i, 2), 5);
-			(*i)++;
-		}
-		else
-			add_token_list(token_list, my_substr(input, *i, 1), 2);
-	}
-	return (*i);
-}
+// int init_op_token(char *input, int *i, t_token **token_list)
+// {
+// 	if (!input || !token_list)
+// 		return -1;
+// 	if (input[*i] && input[*i] == '|')
+// 	{
+// 		if (!input[*i + 1] || (input[*i + 1] != '|' && !input[*i + 2])) // Handle syntax error
+// 			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
+// 		if (input[*i + 1] == '|')
+// 			return (printf("minisHell: syntax error near unexpected token `||'\n"), -1);
+// 		add_token_list(token_list, my_substr(input, *i, 1), 1);
+// 	}
+// 	else if (input[*i] && input[*i] == '>')
+// 	{
+// 		// Handle '>' and '>>' tokens
+// 		if (!input[*i + 1] || (input[*i + 1] != '<' && !input[*i + 2])) // Handle error
+// 			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
+// 		if (input[*i + 1] && input[*i + 1] == '>')
+// 		{
+// 			if (input[*i + 2] && (input[*i + 2] == '>' || input[*i + 2] == '<' || input[*i + 2] == '|'))
+// 				return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 2], input[*i + 3]), -1);
+// 			add_token_list(token_list, my_substr(input, *i, 2), 4);
+// 			(*i)++;
+// 		}
+// 		else if (input[*i + 1] && input[*i + 1] == '<')
+// 			return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 1], input[*i + 2]), -1); //Handle error for invalid combinations like '><' or '<|'
+// 		else
+// 			add_token_list(token_list, my_substr(input, *i, 1), 3);
+// 	}
+// 	else if (input[*i] && input[*i] == '<')
+// 	{
+// 		if (!input[*i + 1] || (input[*i + 1] != '>' && !input[*i + 2])) // Handle error
+// 			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
+// 		if (input[*i + 1] && input[*i + 1] == '<')
+// 		{
+// 			if (input[*i + 2] && (input[*i + 2] == '>' || input[*i + 2] == '<'))
+// 				return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 2], input[*i + 3]), -1);
+// 			add_token_list(token_list, my_substr(input, *i, 2), 5);
+// 			(*i)++;
+// 		}
+// 		else
+// 			add_token_list(token_list, my_substr(input, *i, 1), 2);
+// 	}
+// 	return (*i);
+// }
 
 
 int	create_env(char **env, t_shell *general)
@@ -383,4 +381,94 @@ t_cmd_lst	*initialize_new_cmd()
 	new_cmd->std_in = -2;
 	new_cmd->std_out = -2;
 	return (new_cmd);
+}
+
+
+
+static int check_dollar_sign(char *input, int *i, t_token **token_list)
+{
+	if (input[*i] && input[*i] == '$')
+	{
+		if (input[*i + 1] && input[*i + 1] == '$')
+			add_token_list(token_list, my_substr(input, *i, 2), 4);
+		(*i)++;
+		return 1;
+	}
+	return 0;
+}
+
+static int check_pipe_sign(char *input, int *i, t_token **token_list)
+{
+	if (input[*i] && input[*i] == '|')
+	{
+		if (!input[*i + 1] || (input[*i + 1] != '|' && !input[*i + 2])) // Syntax error
+			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
+		if (input[*i + 1] == '|') // Handle `||` error
+			return (printf("minisHell: syntax error near unexpected token `||'\n"), -1);
+		add_token_list(token_list, my_substr(input, *i, 1), 1);
+		return 1;
+	}
+	return 0;
+}
+
+static int check_greater_than_sign(char *input, int *i, t_token **token_list)
+{
+	if (input[*i] && input[*i] == '>')
+	{
+		if (!input[*i + 1] || (input[*i + 1] != '<' && !input[*i + 2])) // Syntax error
+			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
+
+		if (input[*i + 1] && input[*i + 1] == '>')
+		{
+			if (input[*i + 2] && (input[*i + 2] == '>' || input[*i + 2] == '<' || input[*i + 2] == '|'))
+				return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 2], input[*i + 3]), -1);
+			add_token_list(token_list, my_substr(input, *i, 2), 4);
+			(*i)++;
+		}
+		else if (input[*i + 1] && input[*i + 1] == '<')
+		{
+			return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 1], input[*i + 2]), -1);
+		}
+		else
+			add_token_list(token_list, my_substr(input, *i, 1), 3);
+		return 1;
+	}
+	return 0;
+}
+
+static int check_less_than_sign(char *input, int *i, t_token **token_list)
+{
+	if (input[*i] && input[*i] == '<')
+	{
+		if (!input[*i + 1] || (input[*i + 1] != '>' && !input[*i + 2])) // Syntax error
+			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
+
+		if (input[*i + 1] && input[*i + 1] == '<')
+		{
+			if (input[*i + 2] && (input[*i + 2] == '>' || input[*i + 2] == '<'))
+				return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 2], input[*i + 3]), -1);
+			add_token_list(token_list, my_substr(input, *i, 2), 5);
+			(*i)++;
+		}
+		else
+			add_token_list(token_list, my_substr(input, *i, 1), 2);
+		return 1;
+	}
+	return 0;
+}
+
+int init_op_token(char *input, int *i, t_token **token_list)
+{
+	if (!input || !token_list)
+		return -1; // Return error if input or token_list is invalid
+	// Check for specific tokens
+	if (check_dollar_sign(input, i, token_list) == -1)
+		return -1;
+	if (check_pipe_sign(input, i, token_list) == -1)
+		return -1;
+	if (check_greater_than_sign(input, i, token_list) == -1)
+		return -1;
+	if (check_less_than_sign(input, i, token_list) == -1)
+		return -1;
+	return (*i);
 }

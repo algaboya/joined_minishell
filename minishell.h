@@ -6,7 +6,7 @@
 /*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/31 19:24:37 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/01/31 21:14:06 by ashahbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ int		change_home(t_shell *general);
 char	*get_value(t_shell *general, char *keyik);
 int		change_env_value(t_env *lst, char *keyik, char *valik);
 int		change_prev_dir(t_shell *general);
-int		change_dir(t_shell *general, char *dir);
+int		change_dir(char *dir);
 int		unset_builtin(t_shell *general);
 int		unset_exp_var(t_shell *general, char *new);
 int		delete_exp_node(t_env **lst, t_env *nodik);
