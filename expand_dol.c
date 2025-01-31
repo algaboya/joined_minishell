@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dol.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:13:47 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/01/31 18:55:41 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:53:46 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	check_cut_quotes(t_shell *general, char **input, int *i, int start)
 			general->sg_quote = !general->sg_quote;
 		else if (input[0][*i] == '$' && !general->sg_quote)
 		{
-			// segfault $? $$ $0 again, new one, dunno why look later
-			// echo ba"rev $USER' $USERecho ba"rev $USER' $USER 'jan"$USER"
 			open_dollar(general, input[0], i, start);
 			expand_var(input, general, &start, i);
 		}

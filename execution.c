@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 17:25:43 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/31 21:03:39 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 02:30:04 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void    do_builtin(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "env") == 0)
     	set_exit_status(export_builtin(general, tmp_cmd_lst->cmd));
     else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "cd") == 0)
-    	set_exit_status(cd_builtin(general));
+    	set_exit_status(cd_builtin(general, tmp_cmd_lst));
     else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "unset") == 0)
 	    set_exit_status(unset_builtin(general));
 	else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "exit") == 0)
@@ -157,6 +157,8 @@ int execute(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index)
             clean_gen_exit(general, get_exit_status(), 0, 1);
         }
         set_exit_status(exec_external_cmds(general, tmp_cmd_lst));
+          printf("stat = %d\n", get_exit_status());
+
     }
     if (index > 0)
         close(general->fd[index - 1][0]);
@@ -191,9 +193,13 @@ void    duping(t_shell *general, int index)
 int exec_external_cmds(t_shell *general, t_cmd_lst *tmp_cmd_lst)
 {
 	if (!tmp_cmd_lst->cmd)
-		clean_gen_exit(general, get_exit_status(), 0,1);
+		clean_gen_exit(general, get_exit_status(), 0, 1);
     if (is_abs_rel_path(tmp_cmd_lst->cmd))
-       do_path_exec(general);
+     {
+
+          do_path_exec(general);
+        //   return (get_exit_status());
+     }
     else
     {
         split_and_run(general, tmp_cmd_lst);
@@ -248,11 +254,9 @@ void do_path_exec(t_shell *general)
 {
     if (is_directory(general->cmd_lst->cmd))
     {
-        ft_putstr_fd("minisHell: ", 2);
-        ft_putstr_fd(general->cmd_lst->cmd, 2);
-        ft_putstr_fd(": is a directory\n", 2);
-        free_cmd_lst(&general->cmd_lst);
-        general->cmd_lst = NULL;
+        my_error(NULL, "Is a directory", 126);
+        // free_cmd_lst(&general->cmd_lst);
+        // general->cmd_lst = NULL;
         clean_gen_exit(general, 126, 0, 1);
 	}
     if (access(general->cmd_lst->cmd, F_OK) == 0)
@@ -261,12 +265,21 @@ void do_path_exec(t_shell *general)
         {
             if (execve(general->cmd_lst->cmd, general->cmd_lst->args,
                 list_to_array(general->sorted_env_lst)) == -1)
-                clean_gen_exit(general, 127, 1, 0);
+               {
+                 my_error(NULL, "No such file or directory", 127);
+                clean_gen_exit(general, 127, 1, 1);
+               }
         }
         else
+        {
+            my_error(NULL, "Permission denied", 126);
             clean_gen_exit(general, 126, 1, 0);
+        }
     }
     else
-        clean_gen_exit(general, 127, 1, 0);
+    {
+        my_error(NULL, "No such file or directory", 127);
+        clean_gen_exit(general, 127, 1, 1);
+    }
 }
 

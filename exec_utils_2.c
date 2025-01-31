@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 21:07:27 by tumolabs          #+#    #+#             */
-/*   Updated: 2025/01/31 19:23:32 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 02:27:34 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int is_abs_rel_path(char *cmd)
     if (cmd[0] == '.' || (cmd[0] == '.' && cmd[1] == '/') || (cmd[0] == '.' && cmd[1] == '.'
         && cmd[2] == '/') || cmd[0] == '/' || cmd[0] == '~')
         return (1);
-    // printf("______%s\n", cmd);
     return (0);
 }
 

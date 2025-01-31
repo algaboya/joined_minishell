@@ -3,18 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:33:37 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/31 21:13:10 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:39:12 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include "minishell.h"
+void my_error(char *cmd, char *error, int status)
+{
+	set_exit_status(status);
+	ft_putstr_fd("minisHell: ", 2);
+	if (cmd)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putstr_fd(error, 2);
+	ft_putstr_fd("\n", 2);
+}
 
-int	cd_builtin(t_shell *general)
+int	cd_builtin(t_shell *general,t_cmd_lst *temp_cmd_lst)
 {
 	int		status;
 	char	*cwd;
@@ -22,13 +33,15 @@ int	cd_builtin(t_shell *general)
 
 	cwd = getcwd(NULL, 0);
 	status = SUCCESS_EXIT;
-	if (!general->cmd_lst->args[1])
+	if (count_args(temp_cmd_lst->args) >= 2)
+		return (my_error("cd", "too many arguments", EXIT_FAILURE), EXIT_FAILURE);
+	if (!temp_cmd_lst->args[1])
 		status = change_home(general);
-	else if (general->cmd_lst->args[1] \
-		&& ft_strcmp(general->cmd_lst->args[1], "-") == 0)
+	else if (temp_cmd_lst->args[1] \
+		&& ft_strcmp(temp_cmd_lst->args[1], "-") == 0)
 		status = change_prev_dir(general);
-	else if (general->cmd_lst->args[1])
-		status = change_dir(general->cmd_lst->args[1]);
+	else if (temp_cmd_lst->args[1])
+		status = change_dir(temp_cmd_lst->args[1]);
 	newCWD = getcwd(NULL, 0);
 	if (!newCWD)
 	{

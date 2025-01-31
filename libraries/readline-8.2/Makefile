@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /Users/ashahbaz/Desktop/joined/libraries/readline-8.2
+BUILD_DIR = /home/algaboya/Desktop/me_arm/libraries/readline-8.2
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /Users/ashahbaz/Desktop/joined/libraries/readline
+prefix = /home/algaboya/Desktop/me_arm/libraries/readline
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

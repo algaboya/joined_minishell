@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/31 21:14:06 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:27:02 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ typedef struct s_shell
 	int					original_stdout;
 }			t_shell;
 
-
+void my_error(char *cmd, char *error, int status);
 void	execute_heredoc(t_shell *g, t_cmd_lst *cmd);
 int is_redir(t_ttype type);
 t_token		*ft_lst_delone(t_token **lst, t_token *node);
@@ -141,7 +141,7 @@ int			open_redir(t_shell *g);
 //int			redirs_management(t_shell *g);
 void		fill_commands(t_shell *general);
 // int			check_fill_commands(t_shell *g, int i, int j);
-int check_fill_commands(t_shell *g, int i);
+int 	check_fill_commands(t_shell *g);
 void		check_heredoc_syntax(t_token *head);
 t_cmd_lst	*initialize_new_cmd();
 int 		create_cmd_lst(t_shell *g);
@@ -231,7 +231,7 @@ void	create_print_cmd(t_shell *general);
 int		export_valid(char *arg);
 int		pwd_builtin(t_shell *general);
 int		echo_builtin(t_shell *general, t_cmd_lst *cmd);
-int		cd_builtin(t_shell *general);
+int		cd_builtin(t_shell *general,t_cmd_lst *temp_cmd_lst);
 int		export_builtin(t_shell *general, char *command);
 void	error_message(char *var);
 int		ft_isdigit(int c);

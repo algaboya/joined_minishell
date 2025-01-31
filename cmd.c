@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:57:54 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/31 21:01:58 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 00:42:47 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,84 +102,85 @@ static void handle_word(t_shell *g, int *j)
 	g->curr_tok = g->curr_tok->next;
 }
 
-static void process_tokens(t_shell *g)
-{
-	 int j = 0;
-
-	while (g->curr_tok && g->curr_tok->context)
-	{
-		if (g->curr_tok->type == PIPE)
-		{
-			g->curr_tok = g->curr_tok->next;
-			break;
-		}
-		else if (g->curr_tok->next && is_redir(g->curr_tok -> type))
-		{
-			handle_redirection(g, g->curr_tok->type);
-		}
-		else if (g->curr_tok && g->curr_tok->type == WORD)
-			handle_word(g, &j);
-	}
-	g->curr_cmd->args[j] = NULL;
-}
-// static int	args_count(t_token *tmp)
+// static void process_tokens(t_shell *g)
 // {
-// 	int		count;
-// 	//t_token	*tmp;
+// 	 int j = 0;
 
-// 	count = 0;
-// 	while (tmp && (tmp -> type != PIPE))
+// 	while (g->curr_tok && g->curr_tok->context)
 // 	{
-// 		if (is_redir(tmp -> type))
+// 		if (g->curr_tok->type == PIPE)
 // 		{
-// 			if (tmp -> next)
-// 				tmp = tmp -> next;
-// 			else
-// 				break ;
-// 			if (tmp -> next)
-// 				tmp = tmp -> next;
-// 			else
-// 				break ;
+// 			g->curr_tok = g->curr_tok->next;
+// 			break;
 // 		}
-// 		else
+// 		else if (g->curr_tok->next && is_redir(g->curr_tok -> type))
 // 		{
-// 			count++;
-// 			tmp = tmp -> next;
+// 			handle_redirection(g, g->curr_tok->type);
 // 		}
+// 		else if (g->curr_tok && g->curr_tok->type == WORD)
+// 			handle_word(g, &j);
 // 	}
-// 	return (count);
+// 	g->curr_cmd->args[j] = NULL;
 // }
-int check_fill_commands(t_shell *g, int i)
+static int	args_count(t_token *tmp)
 {
-	//int j = 0;
+	int		count;
+	//t_token	*tmp;
 
-	// while (g -> curr_cmd)//echo < 123 hi
-	// {
-	// 	j = 0;
-	// 	fill_commands(g);
-	// 	g->curr_cmd->args = malloc(sizeof(char *) * (args_count(g->curr_tok) + 1));//check malloc
-	// 	g->curr_cmd->args[args_count(g->curr_tok)] = NULL;
-	// 	while (g->curr_tok && g->curr_tok->type != PIPE)
-	// 	{
-	// 	printf("->>>>>>>>>%s\n",g->curr_tok ->context);
-	// 		if (g->curr_tok->next && is_redir(g->curr_tok -> type))
-	// 			handle_redirection(g, g->curr_tok->type);
-	// 		else if (g->curr_tok && g->curr_tok->type == WORD)
-	// 			handle_word(g, &j);
-	// 	}
-	// 	g->curr_tok = g->curr_tok -> next;
-	// 	printf("barev\n");
-	// 	g->curr_cmd = g->curr_cmd -> next;
-	// }
-	while (g->curr_tok && i++ < g->pipe_count + 1)
+	count = 0;
+	while (tmp && (tmp -> type != PIPE))
 	{
-		//printf("curr tok ->>>>>>>> [%s]\n", g->curr_tok -> context);
-		fill_commands(g);
-		process_tokens(g);
-		// print_cmd(g -> curr_cmd);
-		if (g->curr_cmd->next)
-			g->curr_cmd = g->curr_cmd->next;
+		if (is_redir(tmp -> type))
+		{
+			if (tmp -> next)
+				tmp = tmp -> next;
+			else
+				break ;
+			if (tmp -> next)
+				tmp = tmp -> next;
+			else
+				break ;
+		}
+		else
+		{
+			count++;
+			tmp = tmp -> next;
+		}
 	}
+	return (count);
+}
+
+int check_fill_commands(t_shell *g)
+{
+	int j;
+
+	j = 0;
+	while (g -> curr_cmd && g->curr_tok)//echo < 123 hi
+	{
+		j = 0;
+		fill_commands(g);
+		g->curr_cmd->args = malloc(sizeof(char *) * (args_count(g->curr_tok) + 1));//check malloc
+		g->curr_cmd->args[args_count(g->curr_tok)] = NULL;
+		while (g->curr_tok && g->curr_tok->type != PIPE)
+		{
+			if (g->curr_tok->next && is_redir(g->curr_tok -> type))
+				handle_redirection(g, g->curr_tok->type);
+			else if (g->curr_tok && g->curr_tok->type == WORD)
+				handle_word(g, &j);
+		}
+		if (g->curr_tok)
+			g->curr_tok = g->curr_tok -> next;
+		g->curr_cmd = g->curr_cmd -> next;
+	}
+	// while (g->curr_tok && i++ < g->pipe_count + 1)
+	// {
+	// 	//printf("curr tok ->>>>>>>> [%s]\n", g->curr_tok -> context);
+	// 	fill_commands(g);
+	// 	process_tokens(g);
+	// 	// print_cmd(g -> curr_cmd);
+	// 	if (g->curr_cmd->next)
+	// 		g->curr_cmd = g->curr_cmd->next;
+	// }
 	return (EXIT_SUCCESS);
 }
 
@@ -203,5 +204,5 @@ int create_cmd_lst(t_shell *g)
 	g->curr_tok = g->tok_lst;
 	if (!g->curr_tok)
 		return (EXIT_SUCCESS);
-	return (check_fill_commands(g, 0));
+	return (check_fill_commands(g));
 }

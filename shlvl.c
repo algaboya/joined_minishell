@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 22:06:51 by tumolabs          #+#    #+#             */
-/*   Updated: 2025/01/21 22:24:04 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/01 00:53:03 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,5 @@ void    incr_shlvl(t_shell *general)
     lvl = ft_itoa(shlvl);
     change_env_value(general->env_lst, "SHLVL", lvl);
     change_env_value(general->sorted_env_lst, "SHLVL", lvl);
+	free(lvl);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 13:18:10 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/01/31 18:55:50 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:28:02 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,34 @@
 // ************************
 // 4 function
 
-int check_cmd(char **env, t_shell *general)
-{
-	// int		index;
-	// int		j;
-	t_token *tmp;
+// int check_cmd(char **env, t_shell *general)
+// {
+// 	// int		index;
+// 	// int		j;
+// 	t_token *tmp;
 
-	tmp = general->tok_lst;
-	(void)env;
-	while (tmp)
-	{
-		if (ft_strcmp((const char *)tmp->context, "env") == 0)
-			return (export_builtin(general, tmp->context), 0);
-		else if (ft_strcmp((const char *)tmp->context, "export") == 0)
-			return (export_builtin(general, tmp->context), 0); // 1 error
-		else if (ft_strcmp((const char *)tmp->context, "pwd") == 0)
-			return (pwd_builtin(general), 0);
-		else if (ft_strcmp((const char *)tmp->context, "cd") == 0)
-			return (cd_builtin(general), 0);
-		else if (ft_strcmp((const char *)tmp->context, "unset") == 0)
-			return (unset_builtin(general), 0);
-		// else if (ft_strcmp((const char *)tmp->context, "echo") == 0)
-		// 	return (echo_builtin(general), 0);
-		else if (ft_strcmp((const char *)tmp->context, "exit") == 0)
-			return (exit_builtin(general), 0);
-		tmp = tmp->next;
-	}
-	return (0);
-}
+// 	tmp = general->tok_lst;
+// 	(void)env;
+// 	while (tmp)
+// 	{
+// 		if (ft_strcmp((const char *)tmp->context, "env") == 0)
+// 			return (export_builtin(general, tmp->context), 0);
+// 		else if (ft_strcmp((const char *)tmp->context, "export") == 0)
+// 			return (export_builtin(general, tmp->context), 0); // 1 error
+// 		else if (ft_strcmp((const char *)tmp->context, "pwd") == 0)
+// 			return (pwd_builtin(general), 0);
+// 		else if (ft_strcmp((const char *)tmp->context, "cd") == 0)
+// 			return (cd_builtin(general), 0);
+// 		else if (ft_strcmp((const char *)tmp->context, "unset") == 0)
+// 			return (unset_builtin(general), 0);
+// 		// else if (ft_strcmp((const char *)tmp->context, "echo") == 0)
+// 		// 	return (echo_builtin(general), 0);
+// 		else if (ft_strcmp((const char *)tmp->context, "exit") == 0)
+// 			return (exit_builtin(general), 0);
+// 		tmp = tmp->next;
+// 	}
+// 	return (0);
+// }
 
 char *sgmnt_cpy(char *input, int *i)
 {
@@ -53,9 +53,13 @@ char *sgmnt_cpy(char *input, int *i)
 	int length;
 
 	length = 0;
-	// while (input[*i + length] && input[*i + length] != ' ' && input[*i + length] != '$' && input[*i + length] != '"')
-	while (input[*i + length] && input[*i + length] != ' ' && input[*i + length] != '"')
+	if (input[*i] == '?')
 		length++;
+	else
+	{
+		while (input[*i + length] && input[*i + length] != ' ' && input[*i + length] != '"')
+			length++;
+	}
 	result = (char *)malloc((length + 1) * sizeof(char));
 	check_malloc(result);
 	j = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/31 21:10:30 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:50:12 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int	init_tokens_cmds(char *input, t_shell *general, int i)
 				&& input[i] != ' ' && input[i] != '$' && input[i] != 34 && input[i] != 39)
 				i++;
 			if (input[i] && flag >= 0)
-				flag = check_cut_quotes(general, &input, &i, start); // and added dollar sign here check_cut_quotes
+				flag = check_cut_quotes(general, &input, &i, start);
 			else if (i > start)
 				add_token_list(&general->tok_lst, my_substr((const char *)input, start, i - start), 0);
 			i--;
