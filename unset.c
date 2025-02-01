@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 19:32:50 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/27 01:41:39 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:46:45 by tumolabs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	unset_builtin(t_shell *general) //char *arg
 	while (new_args[i])
 	{
 		if (is_key_valid(general, new_args[i]))
-			return (printf("minisHell: unset: `%s': not a valid identifier\n", new_args[i]), FAILURE_EXIT);
+			return (export_error(FAILURE_EXIT, "unset", new_args[i]), EXIT_FAILURE);
 		else
 			return(unset_exp_var(general, new_args[i]));
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/01 01:27:02 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:42:07 by tumolabs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_shell
 	int					original_stdout;
 }			t_shell;
 
+void	export_error(int status, char *cmd, char *msg);
 void my_error(char *cmd, char *error, int status);
 void	execute_heredoc(t_shell *g, t_cmd_lst *cmd);
 int is_redir(t_ttype type);
@@ -232,7 +233,7 @@ int		export_valid(char *arg);
 int		pwd_builtin(t_shell *general);
 int		echo_builtin(t_shell *general, t_cmd_lst *cmd);
 int		cd_builtin(t_shell *general,t_cmd_lst *temp_cmd_lst);
-int		export_builtin(t_shell *general, char *command);
+int		export_builtin(t_shell *general, t_cmd_lst *tmp_cmd_lst);
 void	error_message(char *var);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
@@ -265,6 +266,7 @@ int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 void    set_shlvl(t_shell *general);
 void    incr_shlvl(t_shell *general);
+int	ft_isalnum(int i);
 
 // execution
 void	execution(t_shell *general, int index);

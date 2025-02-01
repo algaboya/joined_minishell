@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:55:53 by algaboya          #+#    #+#             */
-/*   Updated: 2025/01/31 18:47:43 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/01 13:38:20 by tumolabs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,70 +56,7 @@ void	execute_heredoc(t_shell *g, t_cmd_lst *cmd)
 	open_infile(g, "temple.txt");
 }
 
-int open_heredoc(t_shell *g, t_token *tok, t_cmd_lst *cmd, int flag)
-{
-	(void)flag;
-	printf("tokk == %s\n", tok->context);
-	if (g->cmd_lst->heredoc == NULL)
-	{
-		if (heredoc_init(g, &cmd, tok) == -1)
-			return (-1);
-	}
-	else if(g->cmd_lst->heredoc != NULL)
-	{
-		free(g->cmd_lst->heredoc);
-		if (heredoc_init(g, &cmd, tok) == -1)
-			return (-1);
-	}
-	execute_heredoc(g, cmd);
-	return (0);
-}
 
-int open_redir_2(t_shell *g)
-{
-	if (ft_strcmp(g->curr_tok->context, "<<") == 0)
-	{
-		printf("tokk == %s\n", g->curr_tok->context);
-		g->curr_tok = ft_lst_delone(&g->tok_lst, g->curr_tok);
-		g->curr_cmd->std_in = open_heredoc(g, g->curr_tok, g->curr_cmd, 1);
-	 	if (g->curr_cmd->std_in == -1)
-			return (EXIT_FAILURE);
-	}
-	else if (g->curr_tok->context[0] == '<')
-	{
-		g->curr_tok = ft_lst_delone(&g->tok_lst, g->curr_tok);
-		g->curr_cmd->std_in = open_infile(g, g->curr_tok->context);
-	 	if (g->curr_cmd->std_in == -1)
-			return (EXIT_FAILURE);
-	}
-	return(0);
-}
-
-int open_redir(t_shell *g)
-{
-	int status;
-
-    status = 0;
-	if (ft_strcmp(g->curr_tok->context, ">>") == 0)
-	{
-		g->curr_tok = ft_lst_delone(&g->tok_lst, g->curr_tok);
-		g->curr_cmd->std_out = open_redir_out(g, g->curr_tok->context, 1);
-	 	if (g->curr_cmd->std_out == -1)
-			return (EXIT_FAILURE);
-	}
-	else if (g->curr_tok->context[0] == '>')
-	{
-		printf("%s\n, ", g->curr_cmd->cmd);
-		g->curr_tok = ft_lst_delone(&g->tok_lst, g->curr_tok);
-		g->curr_cmd->std_out = open_redir_out(g, g->curr_tok->context, 0);
-	 	if (g->curr_cmd->std_out == -1)
-			return (EXIT_FAILURE);
-	}
-	else
-		status = open_redir_2(g);
-	g->curr_tok = ft_lst_delone(&g->tok_lst, g->curr_tok);
-	return (status);
-}
 
 // int redirs_management(t_cmd_lst *cmd, t_ttype type)
 // {

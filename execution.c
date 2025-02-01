@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 17:25:43 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/01 02:30:04 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:31:13 by tumolabs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int    exec_one_cmd(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     int status;
     if (tmp_cmd_lst->cmd && is_builtin(tmp_cmd_lst->cmd))
 	{
+
 		redir_dups(tmp_cmd_lst);
         do_builtin(general, tmp_cmd_lst);
 		dup2(general -> original_stdin, STDIN_FILENO);
@@ -114,6 +115,7 @@ int    exec_one_cmd(t_shell *general, t_cmd_lst *tmp_cmd_lst)
         else
             perror("fork");
     }
+    // printf("smth\n");
     return (get_exit_status());
 }
 
@@ -121,9 +123,9 @@ void    do_builtin(t_shell *general, t_cmd_lst *tmp_cmd_lst)
 {
     (void)tmp_cmd_lst;
     if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "export") == 0)
-    	set_exit_status(export_builtin(general, tmp_cmd_lst->cmd));
+    	set_exit_status(export_builtin(general, tmp_cmd_lst));
     else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "env") == 0)
-    	set_exit_status(export_builtin(general, tmp_cmd_lst->cmd));
+    	set_exit_status(export_builtin(general, tmp_cmd_lst));
     else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "cd") == 0)
     	set_exit_status(cd_builtin(general, tmp_cmd_lst));
     else if (ft_strcmp((const char *)tmp_cmd_lst->cmd, "unset") == 0)
@@ -220,7 +222,7 @@ void    split_and_run(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     if (path == NULL)
     {
         //mini_error(tmp_cmd_lst->cmd, 2);
-		error_msg(127,tmp_cmd_lst->cmd);
+		error_msg(127, tmp_cmd_lst->cmd);
         // general->exit_status = 1;
         free_set_null(path);
         free_cmd_lst(&general->cmd_lst);
@@ -265,10 +267,10 @@ void do_path_exec(t_shell *general)
         {
             if (execve(general->cmd_lst->cmd, general->cmd_lst->args,
                 list_to_array(general->sorted_env_lst)) == -1)
-               {
-                 my_error(NULL, "No such file or directory", 127);
+            {
+                my_error(NULL, "No such file or directory", 127);
                 clean_gen_exit(general, 127, 1, 1);
-               }
+            }
         }
         else
         {

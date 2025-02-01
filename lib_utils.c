@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 14:45:48 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/26 23:29:48 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:07:53 by tumolabs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,3 +95,11 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
+
+// int	ft_isalnum(int i)
+// {
+// 	if ((i >= '0' && i <= '9') || (i >= 'a' && i <= 'z')
+// 		|| (i >= 'A' && i <= 'Z'))
+// 		return (1);
+// 	return (0);
+// }

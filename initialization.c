@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/01 01:50:12 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:52:45 by tumolabs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ int	init_input(char *input, t_shell *general)
 			free(input);
 		}
 		else if (!input)
-		 	exit(get_exit_status());
+		{
+			free(general->doll_lst);
+			exit(get_exit_status());
+		}
 	}
 	return (free(input), get_exit_status());
 }
