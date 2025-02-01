@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:57:54 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/01 00:42:47 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:18:45 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ void fill_commands(t_shell *general)
 	temp = general->curr_tok;
 	while (temp && temp->type == WORD && ++count)
 		temp = temp->next;
-	if (count >= 0)
-	{
-		general->curr_cmd->args = (char **)malloc(sizeof(char *) * (count + 1));
-		if (!general->curr_cmd->args)
-			return ;
-		general->curr_cmd->args[count] = NULL;
-	}
+	// if (count >= 0)
+	// {
+	// 	general->curr_cmd->args = (char **)malloc(sizeof(char *) * (count + 1));
+	// 	printf("----%d\n", count);
+	// 	if (!general->curr_cmd->args)
+	// 		return ;
+	// 	general->curr_cmd->args[count] = NULL;
+	// }
 }
 
 
@@ -200,6 +201,8 @@ int create_cmd_lst(t_shell *g)
 		list_add_back_cmd(&g->cmd_lst, new);
 		i++;
 	}
+	// new = initialize_new_cmd();
+	// list_add_back_cmd(&g->cmd_lst, NULL);
 	g->curr_cmd = g->cmd_lst;
 	g->curr_tok = g->tok_lst;
 	if (!g->curr_tok)

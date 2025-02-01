@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/01 14:42:07 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:24:35 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,8 @@ void    do_builtin(t_shell *general, t_cmd_lst *tmp_cmd_lst);
 int		execute(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index);
 int		is_builtin(char *cmd);
 // free
-void	free_cmd_lst(t_cmd_lst **cmd_lst);
+// void	free_cmd_lst(t_cmd_lst **cmd_lst);
+void free_cmd_lst(t_cmd_lst *tmp_cmd_lst);
 void	free_tok_lst(t_token *tok_lst);
 void	free_env_lst(t_env  *env_lst);
 void	free_doll_lst(t_dollar *doll_lst);

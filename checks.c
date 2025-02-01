@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 13:18:10 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/02/01 13:40:51 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:18:29 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char *sgmnt_cpy(char *input, int *i)
 		length++;
 	else
 	{
-		while (input[*i + length] && input[*i + length] != ' ' && input[*i + length] != '"')
+		while (input[*i + length] && input[*i + length] != ' '
+			&& input[*i + length] != '"' && input[*i + length] != '$' && input[*i + length] != '\'')
 			length++;
 	}
 	result = (char *)malloc((length + 1) * sizeof(char));

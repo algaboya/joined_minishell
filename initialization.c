@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/01 14:52:45 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:56:35 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,36 @@ int	init_input(char *input, t_shell *general)
 		index = 0;
 		init_signal(1);
 		input = readline("\033[38;5;51m\033[48;5;16mminisHell:\033[0m "); //neon
-		if(input && input[0])
+		if(input && input[0] != '\0')
 		{
 			add_history(input);
 			if (init_tokens_cmds(input, general, 0) == 0)
 			{
 				execution(general, index);
+				free_cmd_lst(general->cmd_lst);
 				close_pipes(general->fd, general->pipe_count);
 			}
 			free(input);
 		}
+		else if (input && input[0] == '\0')
+			free(input);
 		else if (!input)
 		{
-			free(general->doll_lst);
-			exit(get_exit_status());
+			// free(general->doll_lst);
+			// free(general);
+			clean_gen_exit(general, get_exit_status(), 0, 1);
+			// exit(get_exit_status());
 		}
+		if (general->pipe_count > 0)
+		{	
+			free(general->fd);
+		}
+		general->fd = NULL;
+		// free_fd_array(general->fd);
+		// free_cmd_lst(general->cmd_lst);
+
+		// free_(general->fd)
+		// free_cmd_lst(general->cmd_lst);
 	}
 	return (free(input), get_exit_status());
 }
@@ -372,7 +387,7 @@ t_cmd_lst	*initialize_new_cmd()
 {
 	t_cmd_lst	*new_cmd;
 
-	new_cmd = (t_cmd_lst	*)malloc(sizeof(t_cmd_lst));
+	new_cmd = (t_cmd_lst *)malloc(sizeof(t_cmd_lst));
 	check_malloc(new_cmd);
 	new_cmd->cmd = NULL;
 	new_cmd->args = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 21:15:45 by tumolabs          #+#    #+#             */
-/*   Updated: 2025/01/18 19:33:42 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:46:18 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int create_pipe(t_shell *general)
     if (!fd)
     {
         printf("Malloc Error\n");
-        clean_gen_exit(general, 1, 0, 1);
+        clean_gen_exit(general, 1, 1, 1);
     }
     // printf("___pipe___\n");
     // while (i < general->pipe_count)

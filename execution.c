@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 17:25:43 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/01 14:31:13 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:56:01 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@ int	get_exit_status(void)
 {
 	return (g_exit_status);
 }
-
-void free_fd_array(int (*fd)[2]) {
-    if (fd)
-    {
-        free(fd);
-        fd = NULL;
-    }
-}
-
 
 void    execution(t_shell *general, int index)
 {
@@ -94,7 +85,6 @@ int    exec_one_cmd(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     int status;
     if (tmp_cmd_lst->cmd && is_builtin(tmp_cmd_lst->cmd))
 	{
-
 		redir_dups(tmp_cmd_lst);
         do_builtin(general, tmp_cmd_lst);
 		dup2(general -> original_stdin, STDIN_FILENO);
@@ -108,7 +98,7 @@ int    exec_one_cmd(t_shell *general, t_cmd_lst *tmp_cmd_lst)
         {
         	if (redir_dups(tmp_cmd_lst) >= 0)
            		set_exit_status(exec_external_cmds(general, general->cmd_lst));
-            clean_gen_exit(general, 1, get_exit_status(), 1);
+            clean_gen_exit(general, get_exit_status(), 1, 1);
         }
         else if (general->cmd_lst->pid > 0)
             waiting(general->cmd_lst->pid, &status);
@@ -152,15 +142,13 @@ int execute(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index)
 		//printf("cmd -> name %s\n", tmp_cmd_lst -> args[1]);
         duping(general, index);
         if (redir_dups(tmp_cmd_lst) < 0)
-			clean_gen_exit(general, get_exit_status(), 0, 1);
+			clean_gen_exit(general, get_exit_status(), 1, 1);
         if (tmp_cmd_lst->cmd && is_builtin(tmp_cmd_lst->cmd))
         {
             do_builtin(general, tmp_cmd_lst);
-            clean_gen_exit(general, get_exit_status(), 0, 1);
+            clean_gen_exit(general, get_exit_status(), 1, 1);
         }
         set_exit_status(exec_external_cmds(general, tmp_cmd_lst));
-          printf("stat = %d\n", get_exit_status());
-
     }
     if (index > 0)
         close(general->fd[index - 1][0]);
@@ -198,9 +186,7 @@ int exec_external_cmds(t_shell *general, t_cmd_lst *tmp_cmd_lst)
 		clean_gen_exit(general, get_exit_status(), 0, 1);
     if (is_abs_rel_path(tmp_cmd_lst->cmd))
      {
-
           do_path_exec(general);
-        //   return (get_exit_status());
      }
     else
     {
@@ -221,11 +207,10 @@ void    split_and_run(t_shell *general, t_cmd_lst *tmp_cmd_lst)
     free_array(splitted);
     if (path == NULL)
     {
-        //mini_error(tmp_cmd_lst->cmd, 2);
-		error_msg(127, tmp_cmd_lst->cmd);
-        // general->exit_status = 1;
+        my_error(tmp_cmd_lst->cmd, "command not found", 127);
         free_set_null(path);
-        free_cmd_lst(&general->cmd_lst);
+        // free_cmd_lst(general->cmd_lst);
+        // general->cmd_lst = NULL;
         // free_fd_array(general->fd);
         clean_gen_exit(general, 127, 1, 1);
     }
@@ -257,9 +242,7 @@ void do_path_exec(t_shell *general)
     if (is_directory(general->cmd_lst->cmd))
     {
         my_error(NULL, "Is a directory", 126);
-        // free_cmd_lst(&general->cmd_lst);
-        // general->cmd_lst = NULL;
-        clean_gen_exit(general, 126, 0, 1);
+        clean_gen_exit(general, 126, 1, 1);
 	}
     if (access(general->cmd_lst->cmd, F_OK) == 0)
     {

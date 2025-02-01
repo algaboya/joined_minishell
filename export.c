@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 16:35:06 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/01 14:41:56 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:16:27 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,15 @@ t_env	**add_env_no_var(char *context, t_shell *general)
 	{
 		if (ft_strcmp(tmp->key, context) == 0)
 		{
-			lol = my_lstnew(context, NULL);
+			free(tmp->value);
+			tmp->value = NULL;
 			return (NULL);
 		}
 		tmp = tmp->next;
 	}
 	lol = my_lstnew(context, NULL);
 	ft_lstadd_back(general->env_lst, lol);
+	printf("%s\n", lol->key);
 	return (EXIT_SUCCESS);
 }
 
