@@ -3,33 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:55:53 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/01 13:38:20 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/02 03:03:31 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int heredoc_init(t_shell *g, t_cmd_lst **cmd, t_token *tok)
+int	heredoc_init(t_shell *g, t_cmd_lst **cmd, t_token *tok)
 {
 	(void)g;
 	(void)cmd;
-	// if(tok)
-	// {
-		if ((*cmd)->heredoc == NULL)
-		{
-			(*cmd)->heredoc = ft_strdup(tok->context);
-			check_malloc((*cmd)->heredoc);
-		}
-	// }
+	if ((*cmd)->heredoc == NULL)
+	{
+		(*cmd)->heredoc = ft_strdup(tok->context);
+		check_malloc(g, (*cmd)->heredoc);
+	}
 	return (0);
 }
+
 void	execute_heredoc(t_shell *g, t_cmd_lst *cmd)
 {
-	char *input;
+	char	*input;
 
 	(void)g;
 	cmd -> std_in = open("temple.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
@@ -56,29 +53,25 @@ void	execute_heredoc(t_shell *g, t_cmd_lst *cmd)
 	open_infile(g, "temple.txt");
 }
 
+void	handle_redirection(t_shell *g, t_ttype type)
+{
+	if (g->curr_tok->next)
+	{
+		g->curr_tok = g->curr_tok->next;
+		if (type == REDIR_OUT)
+			handle_out_redirection(g);
+		else if (type == REDIR_APPEND)
+			handle_append_redirection(g);
+		else if (type == REDIR_IN)
+			handle_in_redirection(g);
+		else if (type == REDIR_HEREDOC)
+			handle_heredoc_redirection(g);
+		g->curr_tok = g->curr_tok->next;
+	}
+}
 
-
-// int redirs_management(t_cmd_lst *cmd, t_ttype type)
-// {
-// 	if (cmd->red_out)
-// 		free_set_null(cmd->red_out);
-// 	cmd->red_out = ft_strdup(g->curr_tok->context);
-// 	cmd -> std_out = open_redir_out(g, cmd -> red_out, 0);
-// 	 }
-// 	t_cmd_lst *cmd;
-
-// 	cmd = g -> cmd_lst;
-// 	while (cmd)
-// 	{
-// 		// if (cmd -> red_out)
-// 		// 	cmd -> std_out = open_redir_out(g, cmd -> red_out, 0);
-// 		if (cmd -> red_append)
-// 			cmd -> std_out = open_redir_out(g, cmd -> red_append, 1);
-// 		else if (cmd -> heredoc)
-// 			execute_heredoc(g, cmd);
-// 		else if (cmd -> red_in)
-// 			cmd -> std_in = open_infile(g, cmd -> red_in);
-// 		cmd = cmd -> next;
-// 	}
-// 	return (0);
-// }
+void	check_redir(char *redir)
+{
+	if (redir)
+		free_set_null(redir);
+}

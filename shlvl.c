@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 22:06:51 by tumolabs          #+#    #+#             */
-/*   Updated: 2025/02/01 00:53:03 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 05:37:43 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,30 +89,31 @@ char	*ft_itoa(int n)
 	return (ptr);
 }
 
-void    set_shlvl(t_shell *general)
+void	set_shlvl(t_shell *general)
 {
-    int shlvl;
-    char *lvl;
-    
-    shlvl = ft_atoi(get_value(general, "SHLVL"));
-    if (shlvl < 0)
-        shlvl = 0;
-    else if (shlvl >= 1000)
-        shlvl = 1;
-    lvl = ft_itoa(shlvl);
-    change_env_value(general->env_lst, "SHLVL", lvl);
-    change_env_value(general->sorted_env_lst, "SHLVL", lvl);
+	int		shlvl;
+	char	*lvl;
+
+	shlvl = ft_atoi(get_value(general, "SHLVL"));
+	if (shlvl < 0)
+		shlvl = 0;
+	else if (shlvl >= 1000)
+		shlvl = 1;
+	lvl = ft_itoa(shlvl);
+	change_env_value(general->env_lst, "SHLVL", lvl);
+	change_env_value(general->sorted_env_lst, "SHLVL", lvl);
+	free_set_null(lvl);
 }
 
-void    incr_shlvl(t_shell *general)
-{
-    int shlvl;
-    char *lvl;
+// void    incr_shlvl(t_shell *general)
+// {
+//     int shlvl;
+//     char *lvl;
 
-    shlvl = ft_atoi(get_value(general, "SHLVL"));
-    shlvl++;
-    lvl = ft_itoa(shlvl);
-    change_env_value(general->env_lst, "SHLVL", lvl);
-    change_env_value(general->sorted_env_lst, "SHLVL", lvl);
-	free(lvl);
-}
+//     shlvl = ft_atoi(get_value(general, "SHLVL"));
+//     shlvl++;
+//     lvl = ft_itoa(shlvl);
+//     change_env_value(general->env_lst, "SHLVL", lvl);
+//     change_env_value(general->sorted_env_lst, "SHLVL", lvl);
+// 	free(lvl);
+// }

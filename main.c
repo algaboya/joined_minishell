@@ -3,34 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:13 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/01 14:51:47 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/02 03:07:48 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ************************
-// *** WARNING *** FULL ***
-// ************************
-
 int	main(int argc, char **argv, char **env)
 {
-	(void)argv;
-	t_shell *general;
 	char	*input;
+	t_shell	*general;
 
+	(void)argv;
 	input = NULL;
 	general = (t_shell *)malloc(sizeof(t_shell));
-	check_malloc(general);
+	if (!general)
+		return (EXIT_FAILURE);
 	if (argc == 1)
 	{
 		init_general(general);
 		create_env(env, general);
-		incr_shlvl(general);
-		if (init_input(input, general)) // if 1 error
+		set_shlvl(general); // incr_shlvl(general);
+		if (init_input(input, general))
 			return (free(general), get_exit_status());
 	}
 	free(general);

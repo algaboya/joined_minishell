@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:04:59 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/01/27 00:11:43 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 02:46:32 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_isalnum(int arg)
 	else
 		return (0);
 }
+
 void	*ft_memset(void *str, int c, size_t n)
 {
 	size_t			i;
@@ -50,14 +51,20 @@ void	*ft_calloc(size_t count, size_t size)
 
 t_env	*ft_lstnew(char *context, int printable) // contains blabla = blabla=bla
 {
-	int	pos;
+	int		pos;
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
-	check_malloc(node);
-	pos = put_key(node, context);	
+	if (!node)
+		return (NULL);
+	pos = put_key(node, context);
 	put_value(node, context, pos);
 	node->is_print = printable;
 	node -> next = NULL;
 	return (node);
+}
+
+int	ft_isalpha(int c)
+{
+	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
 }

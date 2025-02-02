@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:45:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2025/01/19 20:28:22 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/02 03:09:51 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ctrl_c(int sig)
 
 void	back_slash(int sig)
 {
-    ft_putstr_fd("Quit: 3\n", 2);
+	ft_putstr_fd("Quit: 3\n", 2);
 	(void)sig;
 }
 
@@ -43,22 +43,21 @@ void	sig_handler_hdoc(int sig)
 	set_exit_status(1);
 }
 
-
-void init_signal(int mode)
+void	init_signal(int mode)
 {
-    if (mode == 1) // waits input
-    {
-        signal(SIGINT, restore_prompt);
-        signal(SIGQUIT, SIG_IGN);
-    }
-    else if (mode == 2) // under execution
-    {
-        signal(SIGINT, ctrl_c);
-		signal(SIGQUIT, back_slash);
-    }
-    else if (mode == 3) //during heredoc
-    {
-        signal(SIGINT, sig_handler_hdoc);
+	if (mode == 1)
+	{
+		signal(SIGINT, restore_prompt);
 		signal(SIGQUIT, SIG_IGN);
-    }
+	}
+	else if (mode == 2)
+	{
+		signal(SIGINT, ctrl_c);
+		signal(SIGQUIT, back_slash);
+	}
+	else if (mode == 3)
+	{
+		signal(SIGINT, sig_handler_hdoc);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }

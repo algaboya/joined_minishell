@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lib_utils_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 16:11:43 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/18 19:13:13 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/02 02:42:47 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//  5 functions
 
 int	ft_strlen(const char *str)
 {
@@ -22,10 +20,7 @@ int	ft_strlen(const char *str)
 	if (!str)
 		return (-1);
 	while (str[i])
-	{
-		// printf("str[i] = %c\n", str[i]);	
 		i++;
-	}
 	return (i);
 }
 
@@ -39,9 +34,8 @@ char	*my_substr(const char *s, unsigned int start, int len)
 	if (len > ft_strlen(s))
 		len = ft_strlen(s);
 	ptr = malloc(sizeof(char) * (len + 1));
-	check_malloc(ptr);
-	// if (!ptr)
-	// 	return (NULL);
+	if (!ptr)
+		return (NULL);
 	i = 0;
 	while (len)
 	{
@@ -82,7 +76,8 @@ char	*ft_substr(char const *s, unsigned int start, int len)
 		sub = (char *)malloc(count);
 	else
 		sub = (char *)malloc(len + 1);
-	check_malloc(sub);
+	if (!sub)
+		return (NULL);
 	i = 0;
 	while (i < (unsigned int)len && s[start] != '\0')
 	{
@@ -101,14 +96,13 @@ char	*ft_strdup(const char *s1)
 
 	i = 0;
 	s1_dup = (char *)malloc(ft_strlen(s1) + 1);
-	check_malloc(s1_dup);
-	// write(1,"DUP\n",4);
+	if (!s1_dup)
+		return (NULL);
 	while (s1[i] != '\0')
 	{
 		s1_dup[i] = s1[i];
 		i++;
 	}
 	s1_dup[i] = '\0';
-	// printf("ft_strdup, s1_dup = %s, s1[0] = %c\n", s1_dup, s1_dup[0]);
 	return ((char *)s1_dup);
 }

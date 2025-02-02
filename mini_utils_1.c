@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashahbaz <ashahbaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:50:05 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/31 18:59:44 by ashahbaz         ###   ########.fr       */
+/*   Updated: 2025/02/02 02:50:36 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// check_print
 char	*check_env_var(t_env *env_lst, const char *context)
 {
 	t_env	*tmp;
@@ -37,7 +36,6 @@ short	del_t_node(t_token *lst)
 		return (-1);
 	tmp = lst->next;
 	lst->next = tmp->next;
-	// lst->next = lst->next->next;
 	free(tmp->context);
 	free(tmp);
 	return (0);

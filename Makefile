@@ -41,11 +41,13 @@ SRCS_NAME =	main.c mini_utils.c \
 			error_handle.c expand_dol.c\
 			execution.c free.c pipe_utils.c\
 			exec_utils.c pipe.c\
-			signals.c status.c exec_utils_2.c\
+			signals.c exec_utils_2.c\
 			shlvl.c cmd.c remove_extra.c\
 			lib_utils_3.c lib_utils_4.c \
 			redir.c redir_utils.c\
-			error.c\
+			error.c redir_utils_2.c path_exec.c\
+			exec_one.c free_2.c init_tokens.c\
+			init_env.c heredoc_utils.c\
 
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 OBJS_NAME = $(SRCS_NAME:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:37:23 by etamazya          #+#    #+#             */
-/*   Updated: 2025/01/26 23:33:44 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 02:46:48 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_token	*ft_lst_delone(t_token **lst, t_token *node)
 		ft_remove_list(prev, current);
 	return (prev->next);
 }
+
 void	list_add_back_cmd(t_cmd_lst **lst, t_cmd_lst *new)
 {
 	t_cmd_lst	*add;
@@ -63,4 +64,23 @@ void	list_add_back_cmd(t_cmd_lst **lst, t_cmd_lst *new)
 		add->next = new;
 		new->next = NULL;
 	}
+}
+
+size_t	my_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = ft_strlen((char *)src);
+	if (dstsize && dst)
+	{
+		while (i < dstsize - 1 && src[i] != '\0')
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	return (j);
 }

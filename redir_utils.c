@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tumolabs <tumolabs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 00:19:48 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/01 13:38:52 by tumolabs         ###   ########.fr       */
+/*   Updated: 2025/02/01 23:42:14 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	open_redir_out(t_shell *general, char *name, int append)
 	if (fd < 0)
 	{
 		error_msg(1, name);
-		//return (-1);
 	}
 	return (fd);
 }
+
 int	open_infile(t_shell *general, char *name)
 {
 	int	fd;
