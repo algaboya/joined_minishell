@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 14:45:48 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/02 02:47:27 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:04:31 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,26 @@ void	ft_lstadd_back(t_env *lst, t_env *node)
 	current->next = node;
 }
 
-void	ft_strlcpy(char *dest, const char *src, int size, int pos, char limiter)
+void	ft_strlcpy_2(char *dest, const char *src, int size, int pos)
 {
 	int	i;
 
 	i = 0;
-	while (i < size && src[pos] && src[pos] != limiter)
+	while (i < size && src[pos] && src[pos] != '\n')
+	{
+		dest[i] = src[pos];
+		i++;
+		pos++;
+	}
+	dest[i] = '\0';
+}
+
+void	ft_strlcpy(char *dest, const char *src, int size, int pos)
+{
+	int	i;
+
+	i = 0;
+	while (i < size && src[pos] && src[pos] != '=')
 	{
 		dest[i] = src[pos];
 		i++;

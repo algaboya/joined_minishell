@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 05:38:17 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:06:52 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ int	init_tokens_cmds(char *input, t_shell *general, int i)
 	int	flag;
 
 	flag = 0;
-	// while ((input[i] >= 9 && input[i] <= 13) || input[i] == 32)
-	// 	i++;
 	skip_whitespace(input, &i);
 	while (flag >= 0 && input[i] != '\0')
 	{

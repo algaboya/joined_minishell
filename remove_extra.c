@@ -3,16 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   remove_extra.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:48:10 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 05:26:11 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:24:30 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*remove_quoted_positions(char *str, int *indexes, int index_count, int len)
+// still not checked
+// still not checked
+// still not checked
+// static int find_skip(int i, int *indexes, int index_count)
+// {
+// 	int	k;
+
+// 	k = 0;
+// 	while (k < index_count)
+// 	{
+// 		if (indexes[k] == i)
+// 			return (1);
+// 		k++;
+// 	}
+// 	return (0);
+// }
+
+// static char *rm_quoted_pos(char *str, int *indexes, int index_count, int len)
+// {
+// 	int	i;
+// 	int	j;
+// 	char *res;
+
+// 	i = 0;
+// 	j = 0;
+// 	res = malloc(len - index_count + 1);
+// 	if (!res)
+// 		return NULL;
+// 	while (i < len)
+// 	{
+// 		if (!find_skip(i, indexes, index_count))
+// 			res[j++] = str[i];
+// 		i++;
+// 	}
+// 	res[j] = '\0';
+// 	free(str);
+// 	return res;
+// }
+// test aboveee
+// test aboveee
+// test aboveee
+
+static char	*rm_quoted_pos(char *str, int *indexes, int index_count, int len)
 {
 	int		i;
 	int		j;
@@ -21,6 +63,7 @@ static char	*remove_quoted_positions(char *str, int *indexes, int index_count, i
 	int		k;
 
 	res = malloc(len - index_count + 1);
+	// check_malloc(res);
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -69,7 +112,7 @@ static char	*remove_outer_quotes(t_shell *general, char *str, int i, int i_c)
 		}
 		i++;
 	}
-	str = remove_quoted_positions(str, indexes, i_c, len);
+	str = rm_quoted_pos(str, indexes, i_c, len);
 	if (!str)
 		return (free(indexes), NULL);
 	return (free(indexes), str);

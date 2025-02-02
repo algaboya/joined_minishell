@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/02 05:37:01 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:16:58 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,7 @@ void		check_heredoc_syntax(t_shell *general, t_token *head);
 void		check_heredoc_limit(t_shell *general);
 t_cmd_lst	*initialize_new_cmd(void);
 int			create_cmd_lst(t_shell *g);
-
-void		ft_strlcpy(char *dest, const char *src, int size, int pos, char limiter);
+void		ft_strlcpy(char *dest, const char *src, int size, int pos);
 t_env		*ft_lstnew(char *context, int printable);
 void		ft_lstadd_back(t_env *lst, t_env *node);
 int			ft_strcmp(const char *s1, const char *s2);
@@ -255,6 +254,7 @@ void		close_exit(t_shell *general);
 void		duping(t_shell *general, int index);
 void		waiting(pid_t pid, int *_status);
 int			pipe_fork(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index);
+void		ft_strlcpy_2(char *dest, const char *src, int size, int pos);
 
 // archive
 char		*ft_substr(char const *s, unsigned int start, int len);

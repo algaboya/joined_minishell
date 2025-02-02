@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:13 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/02 03:07:48 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:02:01 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		init_general(general);
 		create_env(env, general);
-		set_shlvl(general); // incr_shlvl(general);
+		set_shlvl(general);
 		if (init_input(input, general))
 			return (free(general), get_exit_status());
 	}

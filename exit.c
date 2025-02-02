@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 16:47:41 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 05:51:38 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:06:07 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	exit_builtin(t_shell *general)
 	set_exit_status(exit_statusik(general->cmd_lst->args[1]));
 	clean_gen_exit(general, get_exit_status(), 1, 1);
 	return (0);
-	// exit(get_exit_status());
 }
 
 // int	exit_statusik(char *arg)

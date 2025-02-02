@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 21:07:27 by tumolabs          #+#    #+#             */
-/*   Updated: 2025/02/02 05:35:25 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:06:25 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,6 @@ void	clean_gen_exit(t_shell *general, int number, int cmd, int exitik)
 		free_cmd_lst(general->cmd_lst);
 		general->cmd_lst = NULL;
 	}
-    // if (general->doll_lst->u_key || general->doll_lst->value)
-    // {
-    //     free_set_null(general->doll_lst->u_key);
-    //     free_set_null(general->doll_lst->value);
-    // }
 	free(general->doll_lst);
 	general->doll_lst = NULL;
 	free_env_lst(general->env_lst);

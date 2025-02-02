@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:14:38 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 03:15:32 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:09:42 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_pipe_sign(char *input, int *i, t_token **token_list)
 	{
 		if (!input[*i + 1] || (input[*i + 1] != '|' && !input[*i + 2]))
 			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
-		if (input[*i + 1] == '|') // Handle `||` error
+		if (input[*i + 1] == '|')
 			return (printf("minisHell: syntax error near unexpected token `||'\n"), -1);
 		add_token_list(token_list, my_substr(input, *i, 1), 1);
 		return (1);
@@ -67,7 +67,7 @@ static int	check_less_than_sign(char *input, int *i, t_token **token_list)
 {
 	if (input[*i] && input[*i] == '<')
 	{
-		if (!input[*i + 1] || (input[*i + 1] != '>' && !input[*i + 2])) // Syntax error
+		if (!input[*i + 1] || (input[*i + 1] != '>' && !input[*i + 2]))
 			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
 		if (input[*i + 1] && input[*i + 1] == '<')
 		{

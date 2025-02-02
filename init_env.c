@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:32:38 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 05:24:07 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:05:26 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	put_key(t_env *node, char	*src)
 	node -> key = (char *)malloc(sizeof(char) * (j + 1));
 	if (!node-> key)
 		return (-1);
-	ft_strlcpy(node -> key, (const char *)src, j, 0, '=');
+	ft_strlcpy(node -> key, (const char *)src, j, 0);
 	if (!node-> key)
 		return (-1);
 	return (j + 1);
@@ -108,7 +108,7 @@ void	put_value(t_env *node, char *src, int pos)
 	node -> value = (char *)malloc(sizeof(char) * (len + 1));
 	if (!node -> value)
 		return ;
-	ft_strlcpy(node -> value, src, len, pos, '\n');
+	ft_strlcpy_2(node -> value, src, len, pos);
 	if (!node -> value)
 		return ;
 }
