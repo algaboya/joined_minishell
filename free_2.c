@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:09:11 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 05:36:45 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:35:09 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ void	cmd_free(t_shell *general)
 		free_cmd_lst(general->cmd_lst);
 		general->cmd_lst = NULL;
 	}
-    else
-        return ;
+	else
+		return ;
 }

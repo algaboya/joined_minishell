@@ -6,7 +6,7 @@
 /*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/02 14:16:58 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:53:47 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void		my_error(char *cmd, char *error, int status);
 void		execute_heredoc(t_shell *g, t_cmd_lst *cmd);
 int			is_redir(t_ttype type);
 t_token		*ft_lst_delone(t_token **lst, t_token *node);
-void		list_add_back_cmd(t_cmd_lst **lst, t_cmd_lst *new);
+void		list_add_back_cmd(t_cmd_lst **lst, t_cmd_lst *n_new);
 int			heredoc_init(t_shell *g, t_cmd_lst **cmd, t_token *tok);
 void		fill_commands(t_shell *general);
 int			check_fill_commands(t_shell *g);
@@ -148,7 +148,7 @@ int			partition(char **arr, int low, int high);
 void		swap(char **a, char **b);
 
 // ***_____utils_____***
-void		print_env(t_env *new, int flag);
+void		print_env(t_env *n_new, int flag);
 void		print_tokens(t_token *head);
 int			put_key(t_env *node, char *src);
 void		put_value(t_env *node, char *src, int pos);
@@ -197,7 +197,7 @@ char		**list_to_array(t_env *env);
 size_t		my_strlcpy(char *dst, const char *src, size_t dstsize);
 void		free_array(char **arr);
 t_env		*my_lstnew(char *key, char *value);
-int			print_export(char *new);
+int			print_export(char *n_new);
 t_env		*bubble_sort_lst(t_env *lst);
 void		swap_node(t_env	*a, t_env *b);
 int			change_home(t_shell *general);
@@ -206,7 +206,7 @@ int			change_env_value(t_env *lst, char *keyik, char *valik);
 int			change_prev_dir(t_shell *general);
 int			change_dir(char *dir);
 int			unset_builtin(t_shell *general);
-int			unset_exp_var(t_shell *general, char *new);
+int			unset_exp_var(t_shell *general, char *n_new);
 int			delete_exp_node(t_env **lst, t_env *nodik);
 void		free_node(t_env *node);
 int			exit_builtin(t_shell *general);
@@ -220,6 +220,9 @@ void		set_shlvl(t_shell *general);
 // void    incr_shlvl(t_shell *general);
 int			ft_isalnum(int i);
 void		cmd_free(t_shell *general);
+void		cmd_stuff(t_shell *general);
+void		skip_whitespace(char *input, int *i);
+int			is_not_symbol(char c, int flag);
 
 // execution
 void		execution(t_shell *general, int index);
@@ -245,6 +248,8 @@ void		free_doll_lst(t_dollar *doll_lst);
 void		free_set_null(void *tmp);
 char		*the_path(char **splitted, char *cmd);
 void		do_path_exec(t_shell *general);
+void		syntax_error(char *message);
+void		syntax_error_2(char c1, char c2);
 
 // pipe
 int			pipe_count(t_token *tok_lst);
@@ -265,7 +270,7 @@ int			get_exit_status(void);
 
 // signal
 void		init_signal(int mode);
-int			init_tokens_cmds(char *input, t_shell *general, int i);
+int			init_tokens_cmds(char *input, t_shell *g, int i, int flag);
 t_token		*remove_extra_quotes(t_shell *general);
 int			open_redir_out(t_shell *general, char *name, int append);
 int			redir_dups(t_cmd_lst *lst);

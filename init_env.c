@@ -6,7 +6,7 @@
 /*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:32:38 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 14:05:26 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:22:14 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	create_env(char **env, t_shell *general)
 	return (0);
 }
 
-void	print_env(t_env *new, int flag)
+void	print_env(t_env *n_new, int flag)
 {
 	t_env	*lst;
 
-	lst = bubble_sort_lst(new);
+	lst = bubble_sort_lst(n_new);
 	while (lst != NULL)
 	{
 		if (flag == 1)

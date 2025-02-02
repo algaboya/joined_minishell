@@ -6,82 +6,40 @@
 /*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:48:10 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 14:24:30 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:07:35 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// still not checked
-// still not checked
-// still not checked
-// static int find_skip(int i, int *indexes, int index_count)
-// {
-// 	int	k;
+static int	find_skip(int i, int *indexes, int index_count)
+{
+	int	k;
 
-// 	k = 0;
-// 	while (k < index_count)
-// 	{
-// 		if (indexes[k] == i)
-// 			return (1);
-// 		k++;
-// 	}
-// 	return (0);
-// }
-
-// static char *rm_quoted_pos(char *str, int *indexes, int index_count, int len)
-// {
-// 	int	i;
-// 	int	j;
-// 	char *res;
-
-// 	i = 0;
-// 	j = 0;
-// 	res = malloc(len - index_count + 1);
-// 	if (!res)
-// 		return NULL;
-// 	while (i < len)
-// 	{
-// 		if (!find_skip(i, indexes, index_count))
-// 			res[j++] = str[i];
-// 		i++;
-// 	}
-// 	res[j] = '\0';
-// 	free(str);
-// 	return res;
-// }
-// test aboveee
-// test aboveee
-// test aboveee
+	k = 0;
+	while (k < index_count)
+	{
+		if (indexes[k] == i)
+			return (1);
+		k++;
+	}
+	return (0);
+}
 
 static char	*rm_quoted_pos(char *str, int *indexes, int index_count, int len)
 {
 	int		i;
 	int		j;
 	char	*res;
-	int		skip;
-	int		k;
 
-	res = malloc(len - index_count + 1);
-	// check_malloc(res);
-	if (!res)
-		return (NULL);
 	i = 0;
 	j = 0;
+	res = malloc(len - index_count + 1);
+	if (!res)
+		return (NULL);
 	while (i < len)
 	{
-		skip = 0;
-		k = 0;
-		while (k < index_count)
-		{
-			if (indexes[k] == i)
-			{
-				skip = 1;
-				break ;
-			}
-			k++;
-		}
-		if (!skip)
+		if (!find_skip(i, indexes, index_count))
 			res[j++] = str[i];
 		i++;
 	}

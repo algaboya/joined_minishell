@@ -6,7 +6,7 @@
 /*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 14:06:52 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:32:52 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	init_input(char *input, t_shell *general)
 		if (input && input[0] != '\0')
 		{
 			add_history(input);
-			if (init_tokens_cmds(input, general, 0) == 0)
+			if (init_tokens_cmds(input, general, 0, 0) == 0)
 			{
 				execution(general, index);
 				cmd_free(general);
@@ -56,47 +56,32 @@ int	init_input(char *input, t_shell *general)
 	return (free(input), get_exit_status());
 }
 
-static void	skip_whitespace(char *input, int *i)
+int	init_tokens_cmds(char *input, t_shell *g, int i, int flag)
 {
-	while ((input[*i] >= 9 && input[*i] <= 13) || input[*i] == 32)
-		(*i)++;
-}
+	int	st;
 
-int	init_tokens_cmds(char *input, t_shell *general, int i)
-{
-	int	start;
-	int	flag;
-
-	flag = 0;
 	skip_whitespace(input, &i);
 	while (flag >= 0 && input[i] != '\0')
 	{
-		if (flag >= 0 && input[i] && (input[i] == '|' || input[i] == '>'
-				|| input[i] == '<' || input[i] == ' '))
-			flag = init_op_token(input, &i, &general->tok_lst);
+		if (flag >= 0 && input[i] && (is_not_symbol(input[i], 1) == 1))
+			flag = init_op_token(input, &i, &g->tok_lst);
 		else
 		{
-			start = i;
-			while (flag >= 0 && input[i] && input[i] != '|' && input[i] != '>'
-				&& input[i] != '<' && input[i] != ' ' && input[i] != '$'
-				&& input[i] != 34 && input[i] != 39)
+			st = i;
+			while (flag >= 0 && input[i] && (is_not_symbol(input[i], 0) == 1))
 				i++;
 			if (input[i] && flag >= 0)
-				flag = check_cut_quotes(general, &input, &i, start);
-			else if (i > start)
-				add_token_list(&general->tok_lst, my_substr((const char *)input,
-						start, i - start), 0);
+				flag = check_cut_quotes(g, &input, &i, st);
+			else if (i > st)
+				add_token_list(&g->tok_lst, my_substr(input, st, i - st), 0);
 			i--;
 		}
 		if (flag < 0)
-			return (clean_list(&general->tok_lst), -1);
+			return (clean_list(&g->tok_lst), -1);
 		if (input[i])
 			i++;
 	}
-	general->tok_lst = remove_extra_quotes(general);
-	check_heredoc_limit(general);
-	create_cmd_lst(general);
-	clean_list(&general->tok_lst);
+	cmd_stuff(g);
 	return (0);
 }
 

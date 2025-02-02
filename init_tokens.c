@@ -6,7 +6,7 @@
 /*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:14:38 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 14:09:42 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:56:25 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static int	check_pipe_sign(char *input, int *i, t_token **token_list)
 	if (input[*i] && input[*i] == '|')
 	{
 		if (!input[*i + 1] || (input[*i + 1] != '|' && !input[*i + 2]))
-			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
+			return (syntax_error("newline"), -1);
 		if (input[*i + 1] == '|')
-			return (printf("minisHell: syntax error near unexpected token `||'\n"), -1);
+			return (syntax_error("||"), -1);
 		add_token_list(token_list, my_substr(input, *i, 1), 1);
 		return (1);
 	}
@@ -43,19 +43,17 @@ static int	check_greater_than_sign(char *input, int *i, t_token **token_list)
 	if (input[*i] && input[*i] == '>')
 	{
 		if (!input[*i + 1] || (input[*i + 1] != '<' && !input[*i + 2]))
-			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
-
+			return (syntax_error("newline"), -1);
 		if (input[*i + 1] && input[*i + 1] == '>')
 		{
-			if (input[*i + 2] && (input[*i + 2] == '>' || input[*i + 2] == '<' || input[*i + 2] == '|'))
-				return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 2], input[*i + 3]), -1);
+			if (input[*i + 2] && (input[*i + 2] == '>'
+					|| input[*i + 2] == '<' || input[*i + 2] == '|'))
+				return (syntax_error_2(input[*i + 2], input[*i + 3]), -1);
 			add_token_list(token_list, my_substr(input, *i, 2), 4);
 			(*i)++;
 		}
 		else if (input[*i + 1] && input[*i + 1] == '<')
-		{
-			return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 1], input[*i + 2]), -1);
-		}
+			return (syntax_error_2(input[*i + 1], input[*i + 2]), -1);
 		else
 			add_token_list(token_list, my_substr(input, *i, 1), 3);
 		return (1);
@@ -68,11 +66,11 @@ static int	check_less_than_sign(char *input, int *i, t_token **token_list)
 	if (input[*i] && input[*i] == '<')
 	{
 		if (!input[*i + 1] || (input[*i + 1] != '>' && !input[*i + 2]))
-			return (printf("minisHell: syntax error near unexpected token `newline'\n"), -1);
+			return (syntax_error("newline"), -1);
 		if (input[*i + 1] && input[*i + 1] == '<')
 		{
 			if (input[*i + 2] && (input[*i + 2] == '>' || input[*i + 2] == '<'))
-				return (printf("minisHell: syntax error near unexpected token `%c%c'\n", input[*i + 2], input[*i + 3]), -1);
+				return (syntax_error_2(input[*i + 2], input[*i + 3]), -1);
 			add_token_list(token_list, my_substr(input, *i, 2), 5);
 			(*i)++;
 		}

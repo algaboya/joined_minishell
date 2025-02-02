@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:52:28 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 02:54:22 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:33:10 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,39 +42,27 @@ void	clean_list(t_token **list)
 	*list = NULL;
 }
 
-// void	print_tokens(t_token *head)
-// {
-// 	t_token *current; 
-
-// 	current = head;
-// 	while (current != NULL)
-// 	{
-// 		printf("context: %s\n type: %d\n", current->context, current->type);
-// 		current = current->next;
-// 	}
-// } 
-
-int	print_export(char *new)
+int	print_export(char *n_new)
 {
 	int		j;
 
 	j = 0;
 	printf("declare -x ");
-	while (new[j++] != '=')
+	while (n_new[j++] != '=')
 	{
 		j--;
-		printf("%c", new[j]);
+		printf("%c", n_new[j]);
 		j++;
 	}
-	if (new[j] == '\0')
+	if (n_new[j] == '\0')
 	{
 		printf("\n");
 		return (1);
 	}
 	printf("=\"");
 	j--;
-	while (new[j++] != '\0')
-		printf("%c", new[j]);
+	while (n_new[j++] != '\0')
+		printf("%c", n_new[j]);
 	printf("\"\n");
 	j = 0;
 	return (0);

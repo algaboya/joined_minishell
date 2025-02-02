@@ -1,4 +1,4 @@
-prefix=/home/algaboya/Desktop/finalot/libraries/readline
+prefix=/Users/etamazya/Desktop/joined_minishell/libraries/readline
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 00:21:54 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 02:03:58 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:58:58 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,32 @@ void	error_msg(int status, char *command_name)
 		which_errno();
 	}
 	write(STDERR_FILENO, "\n", 1);
+	return ;
+}
+
+void	syntax_error(char *message)
+{
+	char	*str;
+
+	str = "syntax error near unexpected token `";
+	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, str, ft_strlen(str));
+	write(STDERR_FILENO, message, ft_strlen(message));
+	write(STDERR_FILENO, "'\n", 2);
+	set_exit_status(258);
+	return ;
+}
+
+void	syntax_error_2(char c1, char c2)
+{
+	char	*str;
+
+	str = "syntax error near unexpected token `";
+	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, str, ft_strlen(str));
+	write(STDERR_FILENO, &c1, 1);
+	write(STDERR_FILENO, &c2, 1);
+	write(STDERR_FILENO, "'\n", 2);
+	set_exit_status(258);
 	return ;
 }

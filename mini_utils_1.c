@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:50:05 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/02 02:50:36 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:34:38 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,26 @@ void	clean_env_list(t_env **list)
 		temp = next;
 	}
 	*list = NULL;
+}
+
+void	skip_whitespace(char *input, int *i)
+{
+	while ((input[*i] >= 9 && input[*i] <= 13) || input[*i] == 32)
+		(*i)++;
+}
+
+int	is_not_symbol(char c, int flag)
+{
+	if (flag == 1)
+	{
+		if (c == '|' || c == '>' || c == '<' || c == ' ')
+			return (1);
+	}
+	else if (flag == 0)
+	{
+		if (c != '|' && c != '>' && c != '<' && c != ' ' \
+			&& c != '$' && c != 34 && c != 39)
+			return (1);
+	}
+	return (0);
 }

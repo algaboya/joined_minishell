@@ -6,7 +6,7 @@
 /*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 20:21:20 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 14:09:05 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:36:15 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@ void	free_cmd_lst(t_cmd_lst *tmp_cmd_lst)
 		free(tmp_cmd_lst->cmd);
 		if (tmp_cmd_lst->args)
 		{
-			// i =  0;
-			// while (tmp_cmd_lst->args[i])
-			// {
-			// 	free_set_null(tmp_cmd_lst->args[i]);
-			// 	i++;
-			// }
 			free_args(tmp_cmd_lst);
 			free(tmp_cmd_lst->args);
 			tmp_cmd_lst->args = NULL;

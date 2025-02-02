@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /home/algaboya/Desktop/finalot/libraries/readline-8.2
+BUILD_DIR = /Users/etamazya/Desktop/joined_minishell/libraries/readline-8.2
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /home/algaboya/Desktop/finalot/libraries/readline
+prefix = /Users/etamazya/Desktop/joined_minishell/libraries/readline
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 19:32:50 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 03:13:21 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:20:59 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ int	is_key_valid(t_shell *general, char *key)
 	return (FAILURE_EXIT);
 }
 
-int	unset_exp_var(t_shell *general, char *new)
+int	unset_exp_var(t_shell *general, char *n_new)
 {
 	t_env	*tmp;
 
 	tmp = general->env_lst;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->key, new) == 0)
+		if (ft_strcmp(tmp->key, n_new) == 0)
 			return (delete_exp_node(&general->env_lst, tmp));
 		tmp = tmp->next;
 	}
