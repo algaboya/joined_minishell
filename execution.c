@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 17:25:43 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 01:02:52 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:40:27 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	execution(t_shell *general, int index)
 	if (general->pipe_count > 0)
 	{
 		index = pipe_fork(general, tmp_cmd_lst, index);
+		if (general->pipe_count < 0)
+			return (set_exit_status(127));
 		i = 0;
 		while (i < index && new)
 		{

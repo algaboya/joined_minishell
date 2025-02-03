@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etamazya <el.tamazyan03@gmail.com>         +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/03 13:25:45 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:43:25 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ void		cmd_free(t_shell *general);
 void		cmd_stuff(t_shell *general);
 void		skip_whitespace(char *input, int *i);
 int			is_not_symbol(char c, int flag);
+void		ft_kill_proc(t_cmd_lst *start, t_cmd_lst *end);
 
 // execution
 void		execution(t_shell *general, int index);

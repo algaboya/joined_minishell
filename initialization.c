@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etamazya <el.tamazyan03@gmail.com>         +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/03 14:50:14 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:43:58 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,17 @@ int	init_input(char *input, t_shell *general)
 	}
 	return (free(input), get_exit_status());
 }
-void	print_tokens(t_token *head)
-{
-	t_token *current; 
+// void	print_tokens(t_token *head)
+// {
+// 	t_token *current; 
 
-	current = head;
-	while (current != NULL)
-	{
-		printf("context: %s\n type: %d\n", current->context, current->type);
-		current = current->next;
-	}
-} 
+// 	current = head;
+// 	while (current != NULL)
+// 	{
+// 		printf("context: %s\n type: %d\n", current->context, current->type);
+// 		current = current->next;
+// 	}
+// } 
 
 int	init_tokens_cmds(char *input, t_shell *g, int i, int flag)
 {
@@ -92,7 +92,7 @@ int	init_tokens_cmds(char *input, t_shell *g, int i, int flag)
 		if (input[i])
 			i++;
 	}
-	print_tokens(g->tok_lst); // added this
+	// print_tokens(g->tok_lst); // added this
 	cmd_stuff(g);
 	return (0);
 }

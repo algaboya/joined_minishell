@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 21:15:45 by tumolabs          #+#    #+#             */
-/*   Updated: 2025/02/02 02:59:49 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:47:13 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ int	create_pipe(t_shell *general)
 		{
 			while (i > 0)
 			{
-				close(fd[i][0]);
-				close(fd[i--][1]);
+				if (fd[i][0])
+					close(fd[i][0]);
+				if(fd[i][1])
+					close(fd[i][1]);
+				--i;
 			}
 			free(fd);
-			return (perror("Pipe Error\n"), -1);
+			general->pipe_count = -1;
+			return (-1);
 		}
 	}
 	general->fd = fd;
@@ -48,8 +52,10 @@ void	close_pipes(int (*fd)[2], int count)
 	i = 0;
 	while (i < count)
 	{
-		close(fd[i][0]);
-		close(fd[i][1]);
+		if (fd[i][0])
+			close(fd[i][0]);
+		if (fd[i][1])
+			close(fd[i][1]);
 		i++;
 	}
 }
@@ -60,9 +66,20 @@ int	pipe_fork(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index)
 
 	i = 0;
 	create_pipe(general);
+	if (general->pipe_count < 0)
+	{
+		ft_putstr_fd("MinisHell: fork: Resource temporarily unavailable\n", 2);
+		return (-1);
+	}
 	while (i < (general->pipe_count + 1))
 	{
 		execute(general, tmp_cmd_lst, index);
+		if (tmp_cmd_lst->pid < 0)
+		{
+			ft_kill_proc(general->cmd_lst, tmp_cmd_lst);
+			ft_putstr_fd("MinisHell: fork: Resource temporarily unavailable\n", 2);
+			return (-1);
+		}
 		index++;
 		tmp_cmd_lst = tmp_cmd_lst->next;
 		i++;
