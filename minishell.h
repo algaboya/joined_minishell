@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etamazya <el.tamazyan03@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/02 18:53:47 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:25:45 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ int			redir_dups(t_cmd_lst *lst);
 int			out_redir(t_cmd_lst *lst);
 int			in_redir(t_cmd_lst *lst);
 int			open_infile(t_shell *general, char *name);
-char		*open_dollar(t_shell *general, char *input, int *i, int start);
+char		*open_dollar(t_shell *general, char *input, int *i);
 
 //redirs
 void		handle_out_redirection(t_shell *g);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dol.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <el.tamazyan03@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:13:47 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/02/02 05:23:20 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:04:15 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	expand_var(char **input, t_shell *general, int *start, int *i)
 		check_malloc(general, *input);
 	*start = 0;
 	*i = len;
+	(--*i);
 	return ;
 }
 
@@ -64,30 +65,35 @@ char	*countcpy_len(char *input, int start, int *l, t_shell *general)
 	return (copy);
 }
 
-int	check_cut_quotes(t_shell *general, char **input, int *i, int start)
+int	check_cut_quotes(t_shell *g, char **input, int *i, int start)
 {
-	if (check_inp_quotes(general, *input, *i, start) == -1)
+	if (check_inp_quotes(g, *input, *i, start) == -1)
 		return (-1);
-	while (input[0][*i])
+	while (input[0][*i] && (input[0][*i] != ' ' && !g->sg_quote && !g->db_quote))
 	{
-		if (!general->sg_quote && input[0][*i] == '\"')
-			general->db_quote = !general->db_quote;
-		else if (!general->db_quote && input[0][*i] == '\'')
-			general->sg_quote = !general->sg_quote;
-		else if (input[0][*i] == '$' && !general->sg_quote)
+		if (!g->sg_quote && input[0][*i] == '\"')
+			g->db_quote = !g->db_quote;
+		else if (!g->db_quote && input[0][*i] == '\'')
+			g->sg_quote = !g->sg_quote;
+		else if (input[0][*i] == '$' && !g->sg_quote)
 		{
-			open_dollar(general, input[0], i, start);
-			expand_var(input, general, &start, i);
+			int flag = 0;
+			while (input[0][*i + 1] == '$' && ++flag)
+				(*i)++;
+			if (*i - start > 1 && flag > 1)
+				break;
+			open_dollar(g, *input, i);
+			expand_var(input, g, &start, i);
 		}
 		else if ((input[0][*i] == ' ' || input[0][*i] == '|'
 			|| input[0][*i] == '>' || input[0][*i] == '<')
-				&& !general->db_quote && !general->sg_quote)
-			return (add_token_list(&general->tok_lst,
+				&& !g->db_quote && !g->sg_quote)
+			return (add_token_list(&g->tok_lst,
 					my_substr(*input, start, (*i - start)), 0), 0);
 		if (input[0][(*i)])
 			(*i)++;
 	}
-	add_token_list(&general->tok_lst, my_substr(*input, start,
+	add_token_list(&g->tok_lst, my_substr(*input, start,
 			(*i - start)), 0);
 	return (0);
 }
