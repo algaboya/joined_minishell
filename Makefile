@@ -19,7 +19,7 @@ LIBS_DIR = libraries
 
 INC_DIRS = -I./includes -I./$(LIBS_DIR)/$(READLINE)/include
 
-CFLAGS = -g -Wall -Wextra -Werror $(INC_DIRS) #-g3 -fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror $(INC_DIRS) -g3 -fsanitize=address
 
 READLINE_LIB_PATH = $(LIBS_DIR)/readline/lib
 
@@ -47,7 +47,7 @@ SRCS_NAME =	main.c mini_utils.c \
 			redir.c redir_utils.c\
 			error.c redir_utils_2.c path_exec.c\
 			exec_one.c free_2.c init_tokens.c\
-			init_env.c heredoc_utils.c\
+			init_env.c heredoc_utils.c export_utils.c\
 
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 OBJS_NAME = $(SRCS_NAME:.c=.o)

@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.2
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /Users/algaboya/Desktop/finalll/libraries/readline
+prefix = /Users/etamazya/Desktop/oa/libraries/readline
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /Users/algaboya/Desktop/finalll/libraries/readline-8.2
+BUILD_DIR = /Users/etamazya/Desktop/oa/libraries/readline-8.2
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c

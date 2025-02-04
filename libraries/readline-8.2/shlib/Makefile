@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = ..
 topdir = ..
-BUILD_DIR = /Users/algaboya/Desktop/finalll/libraries/readline-8.2
+BUILD_DIR = /Users/etamazya/Desktop/oa/libraries/readline-8.2
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -52,7 +52,7 @@ SHELL = /bin/sh
 host_os = darwin18.7.0
 host_vendor = apple
 
-prefix = /Users/algaboya/Desktop/finalll/libraries/readline
+prefix = /Users/etamazya/Desktop/oa/libraries/readline
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin

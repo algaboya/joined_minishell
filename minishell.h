@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: etamazya <el.tamazyan03@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/04 18:02:52 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/04 23:00:37 by etamazya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,12 @@ short		del_t_node(t_token *lst);
 int			check_cut_quotes(t_shell *general, char **input, int *i, int start);
 void		error_msg(int status, char *command_name);
 char		*sgmnt_cpy(char *input, int *i);
+
+// Export
+t_env		*create_env_node(char *key, char *value);
+int			update_existing_env(t_env *env_list, char *key, char *value);
+int			add_to_env_lists(t_shell *general, char *key, char *value);
+
 
 // Alla's
 void		free_args(t_cmd_lst *tmp_cmd_lst);
