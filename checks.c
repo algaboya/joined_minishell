@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etamazya <el.tamazyan03@gmail.com>         +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 13:18:10 by elen_t13          #+#    #+#             */
-/*   Updated: 2025/02/03 13:25:34 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:45:08 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*sgmnt_cpy(char *input, int *i)
 	return (result);
 }
 
-char *open_dollar(t_shell *general, char *input, int *i)
+char	*open_dollar(t_shell *general, char *input, int *i)
 {
 	if (input[*i] && input[*i] == '$')
 	{		

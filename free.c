@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 20:21:20 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 18:36:15 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:09:43 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ void	free_env_lst(t_env *env_lst)
 {
 	t_env	*temp;
 
-	while (env_lst)
+	while (env_lst -> next)
 	{
+		//if (env_lst -> next)
 		temp = env_lst->next;
 		if (env_lst->key)
 		{

@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 16:35:06 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 05:07:31 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:37:31 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_env	**add_env_no_var(char *context, t_shell *general)
 		}
 		tmp = tmp->next;
 	}
-	lol = my_lstnew(context, NULL);
+	lol = my_lstnew(ft_strdup(context), NULL);
 	if (!lol)
 		return (NULL);
 	ft_lstadd_back(general->env_lst, lol);
@@ -116,6 +116,6 @@ t_env	**add_env_lst_var(char *context, t_shell *general, int i)
 	if (!lol)
 		return (NULL);
 	ft_lstadd_back(general->env_lst, lol);
-	ft_lstadd_back(general->sorted_env_lst, lol);
+	ft_lstadd_back(general->sorted_env_lst, lol); 
 	return (EXIT_SUCCESS);
 }

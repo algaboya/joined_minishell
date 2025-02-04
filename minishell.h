@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:42:32 by etamazya          #+#    #+#             */
-/*   Updated: 2025/02/03 15:43:25 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:02:52 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_shell
 	int			original_stdout;
 }			t_shell;
 
+void		malloc_exit(t_shell *general);
 void		export_error(int status, char *cmd, char *msg);
 void		my_error(char *cmd, char *error, int status);
 void		execute_heredoc(t_shell *g, t_cmd_lst *cmd);
@@ -120,7 +121,6 @@ t_cmd_lst	*initialize_new_cmd(void);
 int			create_cmd_lst(t_shell *g);
 void		ft_strlcpy(char *dest, const char *src, int size, int pos);
 t_env		*ft_lstnew(char *context, int printable);
-void		ft_lstadd_back(t_env *lst, t_env *node);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strlen(const char *str);
 char		*my_substr(const char *s, unsigned int start, int len);

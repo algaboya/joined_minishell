@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:52:28 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 18:33:10 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:45:19 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_env	*bubble_sort_lst(t_env *lst)
 				swap_node(tmp, i);
 				flag = 1;
 			}
+			if (tmp)
 			tmp = tmp->next;
 		}
 	}

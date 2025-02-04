@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:32:38 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 18:22:14 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:11:13 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,22 @@ int	create_env(char **env, t_shell *general)
 void	print_env(t_env *n_new, int flag)
 {
 	t_env	*lst;
-
 	lst = bubble_sort_lst(n_new);
+
 	while (lst != NULL)
 	{
+	// printf("key = %s\n", n_new->key);
+	// printf("val = %s\n", n_new->value);
 		if (flag == 1)
 		{
-			if (lst -> value == NULL)
+			if (lst->key && lst -> value == NULL)
 				printf("declare -x %s\n", lst -> key);
 			else
 				printf("declare -x %s=\"%s\"\n", lst -> key, lst -> value);
 		}
 		else
 		{
-			if (lst -> value == NULL)
+			if (lst->key && lst -> value == NULL)
 				printf("%s\n", lst -> key);
 			else
 				printf("%s=%s\n", lst -> key, lst -> value);

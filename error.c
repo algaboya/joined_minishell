@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etamazya <etamazya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 00:21:54 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/02 18:58:58 by etamazya         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:39:03 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,10 @@ void	syntax_error_2(char c1, char c2)
 	write(STDERR_FILENO, "'\n", 2);
 	set_exit_status(258);
 	return ;
+}
+
+void	malloc_exit(t_shell *general)
+{
+	ft_putstr_fd("Malloc Error\n", 2);
+	clean_gen_exit(general, 1, 1, 1);
 }

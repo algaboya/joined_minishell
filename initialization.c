@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:38:08 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/03 15:43:58 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:43:24 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	init_tokens_cmds(char *input, t_shell *g, int i, int flag)
 		if (input[i])
 			i++;
 	}
-	// print_tokens(g->tok_lst); // added this
 	cmd_stuff(g);
 	return (0);
 }

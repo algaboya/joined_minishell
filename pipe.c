@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 21:15:45 by tumolabs          #+#    #+#             */
-/*   Updated: 2025/02/03 15:47:13 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:44:31 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ int	create_pipe(t_shell *general)
 	i = 0;
 	fd = malloc(sizeof (int [2]) * general->pipe_count);
 	if (!fd)
-	{
-		printf("Malloc Error\n");
-		clean_gen_exit(general, 1, 1, 1);
-	}
+		malloc_exit(general);
 	while (i < general->pipe_count)
 	{
 		if (pipe(fd[i++]) == -1)
@@ -32,13 +29,12 @@ int	create_pipe(t_shell *general)
 			{
 				if (fd[i][0])
 					close(fd[i][0]);
-				if(fd[i][1])
+				if (fd[i][1])
 					close(fd[i][1]);
 				--i;
 			}
-			free(fd);
 			general->pipe_count = -1;
-			return (-1);
+			return (free(fd), -1);
 		}
 	}
 	general->fd = fd;
@@ -77,7 +73,8 @@ int	pipe_fork(t_shell *general, t_cmd_lst *tmp_cmd_lst, int index)
 		if (tmp_cmd_lst->pid < 0)
 		{
 			ft_kill_proc(general->cmd_lst, tmp_cmd_lst);
-			ft_putstr_fd("MinisHell: fork: Resource temporarily unavailable\n", 2);
+			ft_putstr_fd("MinisHell: fork:", 2);
+			ft_putstr_fd("Resource temporarily unavailable\n", 2);
 			return (-1);
 		}
 		index++;

@@ -6,7 +6,7 @@
 /*   By: algaboya <algaboya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 02:09:11 by algaboya          #+#    #+#             */
-/*   Updated: 2025/02/03 15:43:31 by algaboya         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:42:58 by algaboya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_kill_proc(t_cmd_lst *start, t_cmd_lst *end)
 {
 	if (start != end)
 		ft_kill_proc(start->next, end);
-	if(start->pid > 0)
+	if (start->pid > 0)
 		kill(start->pid, SIGKILL);
 	waitpid(start->pid, NULL, 0);
 	start->pid = -1;
